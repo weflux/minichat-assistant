@@ -2,15 +2,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const MiniFixPlugin = require("@antmjs/plugin-mini-fix");
 const { UnifiedWebpackPluginV5 } = require("weapp-tailwindcss/webpack");
-const WeappTailwindcssDisabled = ["h5", "rn"].includes(process.env.TARO_ENV);
-// const GlobalFixPlugin = require('@antmjs/plugin-global-fix')
+// const WeappTailwindcssDisabled = ["h5", "rn"].includes(process.env.TARO_ENV);
+const GlobalFixPlugin = require('@antmjs/plugin-global-fix')
 
 module.exports = function (chain) {
   chain.merge({
     plugin: {
       install: {
         plugin: UnifiedWebpackPluginV5,
-        args: [{ appType: "taro", disabled: WeappTailwindcssDisabled }],
+        args: [{
+          appType: "taro",
+          // disabled: WeappTailwindcssDisabled
+        }],
       },
     },
   });
@@ -21,7 +24,7 @@ module.exports = function (chain) {
   chain.plugin("MiniFixPlugin").use(new MiniFixPlugin());
 
   //解决支付宝小程序、钉钉小程序、百度小程序没有暴露全局变量global的问题
-  // chain.plugin('GlobalFixPlugin').use(new GlobalFixPlugin())
+  chain.plugin('GlobalFixPlugin').use(new GlobalFixPlugin())
 
   // taro内部的配置：scriptRule.exclude = [filename => /css-loader/.test(filename) || (/node_modules/.test(filename) && !(/taro/.test(filename)))];
   // 下面重写exclude的配置，部分三方包需要babel，包括taro、@antmjs等

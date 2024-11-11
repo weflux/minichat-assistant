@@ -1,19 +1,21 @@
 /// <reference types="@tarojs/taro" />
 
-declare module '*.png';
-declare module '*.gif';
-declare module '*.jpg';
-declare module '*.jpeg';
-declare module '*.svg';
-declare module '*.css';
-declare module '*.less';
-declare module '*.scss';
-declare module '*.sass';
-declare module '*.styl';
+declare module "*.png";
+declare module "*.gif";
+declare module "*.jpg";
+declare module "*.jpeg";
+declare module "*.svg";
+declare module "*.css";
+declare module "*.less";
+declare module "*.scss";
+declare module "*.sass";
+declare module "*.styl";
 
 declare namespace NodeJS {
   interface ProcessEnv {
-    TARO_ENV: 'weapp'
+    TARO_ENV: "weapp" | "alipay";
   }
 }
 
+declare const my: any;
+declare const wx: any;
