@@ -1,5 +1,8 @@
 ## 本地开发
 
+### 版本要求
+node >= 18.17.0
+
 - #### 安装依赖
 
   ```shell
@@ -51,11 +54,11 @@
 
 ## VSCode 配置说明
 
-- 必须安装
+- 推荐安装
 
   - `eslint`、`tslint`、`stylelint`、`prettier`
   
-- 请使用 VScode->Preferences->setting，设置
+- 推荐使用 VScode->Preferences->setting，设置
 
   ```json
   {
@@ -119,81 +122,6 @@
 ├── tsconfig.json
 └── pnpm-lock.yaml
 ```
-
-## 开发要求
-
-### 一般规范
-
-- 统一采用`TypeScript`开发，以支持更友好的代码编辑器提示；
-- 文件名、目录名统一使用`kebab-case`：小写用`-`连接， 其中如有名词请采用单数形式。比如：`user-manage`；
-- 项目中用到的常量命名采用`SNAKE_CASE`：大写并使用`_`连接。统一放在`constant`目录下；
-- 代码中用的变量和函数命名采用`camelCase`：所有单词连写在一起，除了第一个单词以外，每个单词的首字母都大写。比如：`firstName`、`lastName`、`getUserName()`；
-- `ts`/`tsx`/`less`文件的引入统一采用绝对路径，而不是相对路径，比如: `import HomeSwiper from 'src/components/home-swiper'`；
-- 所有提交功能，原则上都需要使用`Form`表单实现。
-
-
-
-### 框架API封装
-
-- `Taro`持续跟进`v3`版本，暂不考虑升级至`v4`；
-- 小程序页面跳转、网络请求等`API`尽量使用`Taro`内置和封装的`API`，比如：`Taro.navigateTo()`、`Taro.request()`等；
-- 在`Taro`没有内置或者封装`API`存在问题时，可以使用小程序对应的`API`。如：`wx.xx`、`my.xx`；
-- 网络请求使用`Taro.request()`进行封装，具体接口代码放在`services`目录下；
-- 下拉刷新需使用框架封装的`pullRefresh`相关的`API`。
-
-
-
-### 组件相关规范
-
-- 页面和组件采用`React hooks`和`Function Component（函数式组件）`进行开发；
-
-- `UI`组件库使用 [@antmjs/Vantui](https://antmjs.github.io/vantui/main/#/home)，原则上不允许另外引入其他组件库；
-
-- 项目范围内的通用的组件可以放在 `components/common/` 目录下，方便其他开发引用；
-
-- 再次强调：针对二次开发的支持：组件、图片等资源 `import` 时需要使用别名/组件路径 `images/xxx.png` 或者 `common/abc`方式引入。切勿使用相对路径；
-
-  > 别名配置如下：'src/components', 'src', 'node_modules/@hyacinth', 'node_modules', './node_modules'
-
-- `toast`组件统一使用`Taro`框架封装的`Taro.showToast()`；
-
-- 长列表渲染需要采用 **虚拟列表** 实现（`Taro`框架内置组件、`Vantui`提供组件都可以采用），一般列表采用直接渲染实现。
-
-
-
-### 样式相关规范
-
-- `CSS`方案推荐采用`tailwindcss + weapp-tailwindcss`原子化方案。对于特殊的组件使用`less`文件添加样式时，需要为每个页面或组件提供一个最外层类名包裹以减少样式冲突。如果不使用原子化`CSS`，可以开启`CSS Modules`模块化功能；
-- 样式文件不建议多次引入，只在入口`tsx`文件里引入一次即可，比如`order/`目录下的`detail.jsx`和`manage.jsx`可以不引入`less`，只在`index.jsx`里引入一次；
-- 每一个目录下通常只允许存在一个`.module.less`文件；
-- 在`js`中转换单位使用`@antmjs/vantui`提供的`pxTransform()`方法。
-
-
-
-### 交互相关规范
-
-- 详情内容需要跳转至对应的详情页面展示；
-- 删除、提交、页面跳转类功能需要弹框二次确认，确认后需自动关闭弹窗；
-- 更新类功能（包括添加、删除、编辑、导入等）完成后，需要自动刷新当前列表或详情页数据；
-- 凡是网络请求等异步操作需要添加加载指示动画，并在操作结束后`toast`提示操作是否成功；
-- 绑定了网络请求的`button`需要添加`loading`展示逻辑，避免重复发起请求；
-- 发起网络请求失败后，需根据错误码、错误信息跳转至对应的错误页面或`toast`提示错误信息；
-- 网络请求全局超时设置为`10s`，超时重发最多`3`次，重发后仍然超时，需`toast`提示“请求超时”。可根据具体产品需求调整；
-- 所有的错误页面需要有返回首页的按钮；
-- 所有的列表组件需要有数据为空的文案和样式；
-- 所有的详情、介绍字段为空时，需要使用`-`替代；
-- 不允许在刚进入小程序时立即请求用户授权信息，以允许用户浏览信息。需要使用授权信息时，需要通过弹框等引导用户手动点击按钮后，再发起授权请求；
-- 所有页面的下拉刷新默认开启。通过`Taro`提供的`hook`定制信息提示等功能；
-- 需要登录后进行后续操作的，需要弹框提示登录，用户确认后跳转至登录页面。
-
-
-
-### 其他三方库使用规范
-
-- 项目状态管理使用 [zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) ，具体使用可参考`stores/counter-store`。在`stores/libs/storage`文件中搭配`Taro`的`setStorageSync、getStorageSync、removeStorageSync`实现持久化存储，具体使用可参考`stores/user-store`。搭配`immer`简化处理不可变数据结构。
-- `lodash`方法导入建议使用 `import filter from 'lodash/filter';` 的方式，而不是全部导入；
-- 时间类工具库使用`dayjs`。
-
 
 
 ### 性能优化
