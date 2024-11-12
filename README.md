@@ -60,7 +60,7 @@ node >= 18.17.0
   
 - 推荐使用 VScode->Preferences->setting，设置
 
-  ```json
+  ```js
   {
     'eslint.autoFixOnSave': true,
     'tslint.autoFixOnSave': true,
