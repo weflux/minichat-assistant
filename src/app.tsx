@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import uma, { defaultConfig } from "src/utils/trace";
-import "./app.less";
 import useCheckUpdate from "./hooks/useCheckUpdate";
+import "./app.less";
 
 const env = process.env.TARO_ENV || "weapp";
 
