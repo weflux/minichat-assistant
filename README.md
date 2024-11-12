@@ -189,6 +189,11 @@ node >= 18.17.0
   ```
 
 
+### 埋点集成
+
+参考文档：[微信小程序集成]('https://developer.umeng.com/docs/147615/detail/147619')、[支付宝小程序集成]('https://developer.umeng.com/docs/147615/detail/147727')、[uni-app多端小程序框架集成]('https://developer.umeng.com/docs/147615/detail/178170')
+参考代码：[Taro集成demo]('https://github.com/umeng/mp-demos/tree/master/taro')
+
 
 
 > **注意**
