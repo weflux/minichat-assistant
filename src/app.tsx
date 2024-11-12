@@ -1,6 +1,7 @@
 import Taro from "@tarojs/taro";
 import uma, { defaultConfig } from "src/utils/trace";
 import "./app.less";
+import useCheckUpdate from "./hooks/useCheckUpdate";
 
 const env = process.env.TARO_ENV || "weapp";
 
@@ -19,6 +20,8 @@ Taro.uma = uma.init(env === "weapp" ? {
 } : defaultConfig)
 
 const App = ({ children }: React.PropsWithChildren) => {
+  useCheckUpdate();
+
   Taro.setNavigationBarColor({
     frontColor: "#000000",
     backgroundColor: "#ffffff",
