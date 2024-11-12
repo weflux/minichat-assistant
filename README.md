@@ -189,17 +189,23 @@ node >= 18.17.0
   ```
 
 
+
 ### 埋点集成
 
-参考文档：[微信小程序集成]('https://developer.umeng.com/docs/147615/detail/147619')、[支付宝小程序集成]('https://developer.umeng.com/docs/147615/detail/147727')、[uni-app多端小程序框架集成]('https://developer.umeng.com/docs/147615/detail/178170')
-参考代码：[Taro集成demo]('https://github.com/umeng/mp-demos/tree/master/taro')
+- 参考文档：[微信小程序集成](https://developer.umeng.com/docs/147615/detail/147619)、[支付宝小程序集成](https://developer.umeng.com/docs/147615/detail/147727)、[uni-app多端小程序框架集成](https://developer.umeng.com/docs/147615/detail/178170)
+
+
+- 参考代码：[Taro集成demo](https://github.com/umeng/mp-demos/tree/master/taro)
 
 
 
-> **注意**
->
+
+
+
+### 开发注意事项
+
 > 1. 当代码更新后，开发者工具不会相应更新时。考虑：关闭`Taro`的`cache`缓存、关闭开发者工具热重载；
-> 2. `@antmjs/vantui`的组件使用`tailwindcss`类名有时不会生效；
+>2. `@antmjs/vantui`的组件使用`tailwindcss`类名有时不会生效；
 > 3. 最新版微信开发者工具的真机调试有问题，`真机调试1.0`无法运行，推荐切换至`真机调试2.0`，或者回退开发者工具版本；
 > 4. `Taro`的`dev`和`build`命令切换运行后，需要在微信开发者工具中清除缓存后，重新启动编译；
 > 5. 每次发布版本推荐将`js`转为`es5`版本，提高兼容性。
