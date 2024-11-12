@@ -17,5 +17,12 @@ declare namespace NodeJS {
   }
 }
 
+// 扩展 Taro 的全局对象
+declare namespace Taro {
+  interface TaroStatic {
+    uma: any;
+  }
+}
+
 declare const my: any;
 declare const wx: any;
