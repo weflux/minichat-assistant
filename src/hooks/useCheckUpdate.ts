@@ -14,7 +14,7 @@ const useCheckUpdate = () => {
     Taro.nextTick(() => {
       // 监听更新检查结果
       updateManager.onCheckForUpdate((res) => {
-        console.log(res.hasUpdate);
+        res.hasUpdate && console.log("---小程序有更新版本 🚀---");
       });
 
       // 监听版本更新准备就绪事件
