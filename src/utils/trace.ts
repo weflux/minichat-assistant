@@ -1,15 +1,7 @@
-import wxuma from "umtrack-wx";
-import aliuma from "umtrack-alipay";
 import { TARO_ENV } from "src/types";
 
 const dev = process.env.NODE_ENV === "development";
 const env: TARO_ENV = process.env.TARO_ENV || "weapp";
-type UMA = typeof wxuma | typeof aliuma;
-
-const UMA_MAP: Record<TARO_ENV, UMA> = {
-  weapp: wxuma,
-  alipay: aliuma,
-};
 
 export const defaultConfig = {
   appKey: "YOUR_APP_KEY", // 由友盟分配的APP_KEY
@@ -19,6 +11,7 @@ export const defaultConfig = {
   enableVerify: false,
 };
 
-const uma: UMA = UMA_MAP[env];
+const uma = env === "weapp" ? require("umtrack-wx") : require("umtrack-alipay");
+
 
 export default uma;
