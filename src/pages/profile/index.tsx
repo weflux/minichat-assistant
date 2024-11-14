@@ -17,12 +17,12 @@ const Profile = () => {
 
   return (
     <View>
-      <View className="mt-10 px-4 w-full flex flex-col items-center">
+      <View className='mt-10 px-4 w-full flex flex-col items-center'>
         <Image src={user?.avatar ?? ""} round width={200} height={200} />
-        <View className="mt-4">{user?.userName}</View>
-        <View className="mt-4 mb-8">{user?.role}</View>
+        <View className='mt-4'>{user?.userName}</View>
+        <View className='mt-4 mb-8'>{user?.role}</View>
         {user?.userName && (
-          <Button type="default" onClick={removeUser}>
+          <Button type='default' onClick={removeUser}>
             Logout
           </Button>
         )}
