@@ -3,11 +3,32 @@
 const npath = require("path");
 const pkg = require("../package.json");
 const miniChain = require("./webpack/mini-chain");
+const fs = require("fs");
+
+
+/**
+ * 需要拷贝的文件
+ * Taro不会把 private.config.json 文件打包，所以使用copy直接将文件拷贝到项目根目录
+ * 这样开发者工具才能读取到本地私有配置项
+*/
+const COPY_FILES = ["project.private.config.json"]
 
 process.env.TARO_ENV = process.env.TARO_ENV ?? "weapp";
 process.env.NODE_ENV = process.env.NODE_ENV ?? "production";
+const generateCopyConfig = (list) => {
+  const patterns = [];
+  list.forEach((file) => {
+    if (fs.existsSync(file))
+      patterns.push({
+        from: file,
+        to: `${process.env.TARO_ENV}/${file}`,
+      });
+  });
+  return { patterns };
+};
 
 const config = {
+  copy: generateCopyConfig(COPY_FILES), // 拷贝文件
   projectName: pkg.name,
   date: "2024-11-11",
   designWidth: 750,
