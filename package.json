@@ -1,6 +1,6 @@
 {
   "name": "hyacinth-miniapp-template",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Taro3.6 + React + TypeScript + tailwindcss + zustand + @antmjs/vantui3.5 微信/支付宝小程序模板",
   "keywords": [
@@ -35,11 +35,11 @@
       "last 1 version"
     ]
   },
-  "author": "zhujiruo <email zhujiruo@hzfi.cn>",
+  "author": "zhujiruo <email zhujiruo@foxmail.com>",
   "dependencies": {
-    "@antmjs/mini-fix": "^2.4.0",
-    "@antmjs/plugin-global-fix": "^2.4.0",
-    "@antmjs/vantui": "^3.5.2",
+    "@antmjs/mini-fix": "^2.4.1",
+    "@antmjs/plugin-global-fix": "^2.4.1",
+    "@antmjs/vantui": "^3.6.1",
     "@babel/runtime": "^7.14.5",
     "@tarojs/components": "3.6.35",
     "@tarojs/helper": "3.6.35",
@@ -61,7 +61,7 @@
     "zustand": "^5.0.1"
   },
   "devDependencies": {
-    "@antmjs/plugin-mini-fix": "^2.4.0",
+    "@antmjs/plugin-mini-fix": "^2.4.1",
     "@babel/core": "^7.13.0",
     "@tarojs/cli": "3.6.35",
     "@tarojs/taro-loader": "3.6.35",
