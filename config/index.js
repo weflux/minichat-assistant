@@ -18,11 +18,13 @@ process.env.NODE_ENV = process.env.NODE_ENV ?? "production";
 const generateCopyConfig = (list) => {
   const patterns = [];
   list.forEach((file) => {
-    if (fs.existsSync(file))
+    if (fs.existsSync(file)) {
+      console.log("火箭🚀🚀🚀🚀")
       patterns.push({
         from: file,
         to: `${process.env.TARO_ENV}/${file}`,
       });
+    }
   });
   return { patterns };
 };
@@ -44,10 +46,6 @@ const config = {
     src: npath.resolve(process.cwd(), "src"),
   },
   defineConstants: {},
-  copy: {
-    patterns: [],
-    options: {},
-  },
   framework: "react",
   compiler: "webpack5",
   hmr: true,

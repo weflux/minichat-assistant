@@ -5,8 +5,8 @@ import { useState } from "react";
 const images = [
   "https://fastly.jsdelivr.net/npm/@vant/assets/apple-1.jpeg",
   "https://fastly.jsdelivr.net/npm/@vant/assets/apple-2.jpeg",
-  "https://fastly.jsdelivr.net/npm/@vant/assets/apple-3.jpeg",
-  "https://fastly.jsdelivr.net/npm/@vant/assets/apple-4.jpeg",
+  // "https://fastly.jsdelivr.net/npm/@vant/assets/apple-3.jpeg",
+  // "https://fastly.jsdelivr.net/npm/@vant/assets/apple-4.jpeg",
 ];
 
 const HomeSwiper = () => {
@@ -17,14 +17,14 @@ const HomeSwiper = () => {
     <View>
       <Swiper
         height={height}
-        paginationColor="#426543"
-        autoPlay="3000"
+        paginationColor='#426543'
+        autoPlay='3000'
         initPage={initPage}
         paginationVisible
       >
         {images.map((item, index) => (
           <SwiperItem key={`swiper#demo1${index}`}>
-            <Image src={item} fit="cover" width="100%" height={`${height}px`} />
+            <Image src={item} fit='cover' width='100%' height={`${height}px`} />
           </SwiperItem>
         ))}
       </Swiper>
