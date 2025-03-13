@@ -18,13 +18,11 @@ process.env.NODE_ENV = process.env.NODE_ENV ?? "production";
 const generateCopyConfig = (list) => {
   const patterns = [];
   list.forEach((file) => {
-    if (fs.existsSync(file)) {
-      console.log("火箭🚀🚀🚀🚀")
+    if (fs.existsSync(file))
       patterns.push({
         from: file,
         to: `${process.env.TARO_ENV}/${file}`,
       });
-    }
   });
   return { patterns };
 };

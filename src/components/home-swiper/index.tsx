@@ -1,5 +1,5 @@
-import { View } from "@tarojs/components";
-import { Swiper, SwiperItem, Image } from "@antmjs/vantui";
+import { Swiper, SwiperItem, View } from "@tarojs/components";
+import { Image } from "@antmjs/vantui";
 import { useState } from "react";
 
 const images = [
@@ -16,11 +16,13 @@ const HomeSwiper = () => {
   return (
     <View>
       <Swiper
-        height={height}
-        paginationColor='#426543'
-        autoPlay='3000'
-        initPage={initPage}
-        paginationVisible
+        className='h-50'
+        indicatorActiveColor='#426543'
+        autoplay
+        circular
+        interval={3000}
+        current={initPage}
+        indicatorDots
       >
         {images.map((item, index) => (
           <SwiperItem key={`swiper#demo1${index}`}>
