@@ -39,7 +39,7 @@
   "dependencies": {
     "@antmjs/mini-fix": "^2.4.1",
     "@antmjs/plugin-global-fix": "^2.4.1",
-    "@antmjs/vantui": "^3.6.1",
+    "@antmjs/vantui": "^3.6.2",
     "@babel/runtime": "^7.14.5",
     "@tarojs/components": "3.6.35",
     "@tarojs/helper": "3.6.35",
