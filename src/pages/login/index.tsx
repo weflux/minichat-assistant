@@ -6,13 +6,13 @@ import {useEffect} from 'react'
 import AuthAPI from "src/api/auth"
 
 export default function Index() {
-  const {token, setToken} = useUserStore()
+  const setToken = useUserStore.use.setToken()
   const user = useUserStore.use.user()
   const setUser = useUserStore.use.setUser()
 
   useEffect(() => {
     console.log('user', user)
-    if (user.userName)
+    if (user.id)
       Taro.navigateBack({
         delta: 1,
         fail: () => Taro.redirectTo({url: '/pages/index/index'})
@@ -29,6 +29,14 @@ export default function Index() {
     })
     console.log(data)
     setToken(data.token)
+    Taro.showToast({title: '登录成功'})
+    setUser({
+      id: data.user.id,
+      name: data.user.name,
+      displayName: data.user.display_name,
+      avatar: data.user.avatar_url,
+      role: "user"
+    })
 
 
     // Taro.showToast({ title: '登录成功' })

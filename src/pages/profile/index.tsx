@@ -9,19 +9,19 @@ const Profile = () => {
   const removeUser = useUserStore.use.removeUser();
 
   useEffect(() => {
-    if (!user?.userName)
+    if (!user?.id)
       Taro.navigateTo({
-        url: "/pages/package-a/login/index",
+        url: "/pages/login/index",
       });
-  }, [user?.userName]);
+  }, [user?.id]);
 
   return (
     <View>
       <View className='mt-10 px-4 w-full flex flex-col items-center'>
-        <Image src={user?.avatar ?? ""} round width={200} height={200} />
-        <View className='mt-4'>{user?.userName}</View>
+        <Image src={user?.avatarUrl ?? ""} round width={200} height={200} />
+        <View className='mt-4'>{user?.id}</View>
         <View className='mt-4 mb-8'>{user?.role}</View>
-        {user?.userName && (
+        {user?.id && (
           <Button type='default' onClick={removeUser}>
             Logout
           </Button>

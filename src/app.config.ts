@@ -21,12 +21,12 @@ export default defineAppConfig({
   pages: [
     "pages/index/index", // 首页
     "pages/profile/index", // 我的
+    "pages/login/index", //登录页
   ],
   subPackages: [
     {
       root: "pages/package-a",
       pages: [
-        "login/index", //登录页
         "counter/index", // 计数页
       ],
     },
