@@ -1,10 +1,12 @@
-import { View } from '@tarojs/components'
-import { Button } from '@antmjs/vantui'
-import { useUserStore } from 'src/stores/user-store'
+import {View} from '@tarojs/components'
+import {Button} from '@antmjs/vantui'
+import {useUserStore} from 'src/stores/user-store'
 import Taro from '@tarojs/taro'
-import { useEffect } from 'react'
+import {useEffect} from 'react'
+import AuthAPI from "src/api/auth"
 
 export default function Index() {
+  const {token, setToken} = useUserStore()
   const user = useUserStore.use.user()
   const setUser = useUserStore.use.setUser()
 
@@ -13,30 +15,40 @@ export default function Index() {
     if (user.userName)
       Taro.navigateBack({
         delta: 1,
-        fail: () => Taro.redirectTo({ url: '/pages/index/index' })
+        fail: () => Taro.redirectTo({url: '/pages/index/index'})
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleClick = () => {
-    Taro.showToast({ title: '登录成功' })
-    setUser({
-      userName: 'hyacinth',
-      avatar: 'https://avatars.githubusercontent.com/u/11801806?v=4',
-      role: 'admin'
+  const handleClick = async () => {
+    const {code} = await Taro.login();
+    console.log('authCode', code)
+    const data = await AuthAPI.getToken({
+      grant_type: 'weixin_miniprogram',
+      authorization_code: code
     })
-    setTimeout(() => {
-      Taro.navigateBack({
-        delta: 1,
-        fail: () => Taro.redirectTo({ url: '/pages/index/index' })
-      })
-    }, 1500)
+    console.log(data)
+    setToken(data.token)
+
+
+    // Taro.showToast({ title: '登录成功' })
+    // setUser({
+    //   userName: 'hyacinth',
+    //   avatar: 'https://avatars.githubusercontent.com/u/11801806?v=4',
+    //   role: 'admin'
+    // })
+    // setTimeout(() => {
+    //   Taro.navigateBack({
+    //     delta: 1,
+    //     fail: () => Taro.redirectTo({ url: '/pages/index/index' })
+    //   })
+    // }, 1500)
   }
 
   return (
     <View className='index'>
       <View>
-        <Button type='primary' onClick={handleClick}>Login</Button>
+        <Button type='primary' onClick={handleClick}>微信登录</Button>
       </View>
     </View>
   )

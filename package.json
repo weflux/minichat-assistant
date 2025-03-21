@@ -1,5 +1,5 @@
 {
-  "name": "hyacinth-miniapp-template",
+  "name": "minichat-labs",
   "version": "1.0.1",
   "private": true,
   "description": "Taro3.6 + React + TypeScript + tailwindcss + zustand + @antmjs/vantui3.x 微信/支付宝小程序模板",
@@ -54,6 +54,7 @@
     "dayjs": "^1.11.13",
     "immer": "^10.1.1",
     "lodash": "^4.17.21",
+    "query-string": "^9.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "umtrack-alipay": "^2.8.0",
