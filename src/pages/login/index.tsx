@@ -3,7 +3,7 @@ import {Button} from '@antmjs/vantui'
 import {useUserStore} from 'src/stores/user-store'
 import Taro from '@tarojs/taro'
 import {useEffect} from 'react'
-import AuthAPI from "src/api/auth"
+import UserAPI from "src/api/auth"
 
 export default function Index() {
   const setToken = useUserStore.use.setToken()
@@ -23,7 +23,7 @@ export default function Index() {
   const handleClick = async () => {
     const {code} = await Taro.login();
     console.log('authCode', code)
-    const data = await AuthAPI.getToken({
+    const data = await UserAPI.getToken({
       grant_type: 'weixin_miniprogram',
       authorization_code: code
     })

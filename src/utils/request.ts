@@ -52,6 +52,7 @@ const request = {
       console.error("Taro request error:", err)
       Taro.showToast({title: "请求服务器失败，请稍后重试!", duration: 3000, icon: "error"})
     })
+    console.log("request result", result)
     if (!result) {
       return;
     }

@@ -4,16 +4,29 @@ import {Image, NoticeBar} from "@antmjs/vantui";
 import {useUserStore} from "src/stores/user-store";
 // import {useCounterStore} from "src/stores/counter-store";
 import HomeSwiper from "src/components/home-swiper";
+import UserAPI from "src/api/auth";
 import "./index.less";
 
 export default function Index() {
   const user = useUserStore.use.user();
-  // const {count, inc, dec} = useCounterStore();
-  const handleGetUserProfile = async (e) => {
+  const setUser = useUserStore.use.setUser()
+  const handleGetUserProfile = async () => {
     const {userInfo} = await Taro.getUserProfile({
       desc: "用于完善用户资料"
     })
-    console.log("user", userInfo)
+    console.log("user_info", userInfo)
+    const newUser = await UserAPI.uploadProfile({
+      display_name: userInfo.nickName,
+      avatar_url: userInfo.avatarUrl,
+    })
+    console.log("user", newUser)
+    setUser({
+      id: newUser.id,
+      name: newUser.name,
+      avatarUrl: newUser.avatar_url,
+      displayName: newUser.display_name,
+      role: "user"
+    })
   };
 
   return (

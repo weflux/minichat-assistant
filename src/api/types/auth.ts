@@ -20,3 +20,8 @@ export interface GetTokenResponse {
   refresh_token: string
   user: UserInfo
 }
+
+export interface UpdateProfileRequest {
+  display_name: string
+  avatar_url: string
+}
