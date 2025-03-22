@@ -1,5 +1,5 @@
 import {View} from "@tarojs/components";
-import {Cell, CellGroup, Col, Divider, Icon, Image, Row} from "@antmjs/vantui";
+import {Cell, CellGroup, Col, Divider, Grid, GridItem, Icon, Image, Row} from "@antmjs/vantui";
 import {useUserStore} from "src/stores/user-store";
 import {useEffect} from "react";
 import Taro from "@tarojs/taro";
@@ -64,23 +64,11 @@ const Profile = () => {
             </Col>
           </Row>
           <Divider />
-          <Row>
-            <Col span={8}>
-              <CellGroup title='学生'>
-                <Cell title='1' isLink linkType='navigateTo' url='/pages/student/index' />
-              </CellGroup>
-            </Col>
-            <Col span={8}>
-              <CellGroup title='内容'>
-                <Cell title='10' isLink linkType='navigateTo' url='/pages/content/index' />
-              </CellGroup>
-            </Col>
-            <Col span={8}>
-              <CellGroup title='课程'>
-                <Cell title='2' isLink linkType='navigateTo' url='/pages/class/index' />
-              </CellGroup>
-            </Col>
-          </Row>
+          <Grid columnNum={3}>
+            <GridItem icon='smile-o' text='1' />
+            <GridItem icon='fire-o' text='29' />
+            <GridItem icon='award-o' text='3' />
+          </Grid>
         </View>
         <View className='mt-6 rounded-md'>
           <CellGroup>
