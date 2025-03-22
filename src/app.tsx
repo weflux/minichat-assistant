@@ -1,4 +1,5 @@
 import Taro from "@tarojs/taro";
+import React from "react"
 import uma, { defaultConfig } from "src/utils/trace";
 import useCheckUpdate from "./hooks/useCheckUpdate";
 import "./app.less";

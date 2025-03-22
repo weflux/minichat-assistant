@@ -1,7 +1,7 @@
-import { View } from "@tarojs/components";
-import { Button, Image } from "@antmjs/vantui";
-import { useUserStore } from "src/stores/user-store";
-import { useEffect } from "react";
+import {View} from "@tarojs/components";
+import {Button, Image} from "@antmjs/vantui";
+import {useUserStore} from "src/stores/user-store";
+import {useEffect} from "react";
 import Taro from "@tarojs/taro";
 
 const Profile = () => {
@@ -15,20 +15,27 @@ const Profile = () => {
       });
   }, [user?.id]);
 
+  const handleUpdateProfile = async () => {
+
+  }
+
   return (
     <View>
       <View className='mt-10 px-4 w-full flex flex-col items-center'>
-        <Image src={user?.avatarUrl ?? ""} round width={200} height={200} />
+        <Image src={user?.avatarUrl ?? ""} round width={200} height={200}/>
         <View className='mt-4'>{user?.displayName}</View>
-        <View className='mt-4 mb-8'>{user?.role}</View>
         {user?.id && (
-          <Button type='default' onClick={removeUser}>
-            Logout
-          </Button>
+          <View>
+            <Button type='default' onClick={handleUpdateProfile}>获取昵称和头像</Button>
+            <Button type='default' onClick={removeUser}>
+              退出
+            </Button>
+          </View>
         )}
       </View>
     </View>
-  );
+  )
+    ;
 };
 
 export default Profile;

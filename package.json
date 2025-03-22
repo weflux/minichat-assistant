@@ -1,5 +1,5 @@
 {
-  "name": "minichat-labs",
+  "name": "minichat-assistant",
   "version": "1.0.1",
   "private": true,
   "description": "Taro3.6 + React + TypeScript + tailwindcss + zustand + @antmjs/vantui3.x 微信/支付宝小程序模板",

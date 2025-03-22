@@ -6,14 +6,20 @@ export default defineAppConfig({
     list: [
       {
         pagePath: 'pages/index/index',
-        // iconPath: 'assets/tabbar/home.png',
-        // selectedIconPath: 'assets/tabbar/home-selected.png',
+        iconPath: 'assets/tabbar/home.png',
+        selectedIconPath: 'assets/tabbar/home_fill.png',
         text: '首页',
       },
       {
+        pagePath: 'pages/post/index',
+        iconPath: 'assets/tabbar/round_add.png',
+        selectedIconPath: 'assets/tabbar/round_add_fill.png',
+        text: '发布',
+      },
+      {
         pagePath: 'pages/profile/index',
-        // iconPath: 'assets/tabbar/profile.png',
-        // selectedIconPath: 'assets/tabbar/profile-selected.png',
+        iconPath: 'assets/tabbar/profile.png',
+        selectedIconPath: 'assets/tabbar/profile_fill.png',
         text: '我的',
       },
     ],
@@ -22,6 +28,7 @@ export default defineAppConfig({
     "pages/index/index", // 首页
     "pages/profile/index", // 我的
     "pages/login/index", //登录页
+    "pages/post/index", // 发布
   ],
   subPackages: [
     {
@@ -35,7 +42,7 @@ export default defineAppConfig({
     enablePullDownRefresh: true, // 默认开启下拉刷新
     backgroundTextStyle: "light",
     navigationBarBackgroundColor: "#fff",
-    navigationBarTitleText: "WeFlux Labs", // 默认导航栏标题
+    navigationBarTitleText: "课外小助教", // 默认导航栏标题
     navigationBarTextStyle: "black",
   },
   lazyCodeLoading: "requiredComponents"

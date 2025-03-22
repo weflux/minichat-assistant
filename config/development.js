@@ -3,7 +3,7 @@ module.exports = {
   env: {
     UMENG_TRACK: false,
     NODE_ENV: '"development"',
-    API_BASE_URL: '"https://labs-api.dev.weflux.cn"',
+    API_BASE_URL: '"https://assistant-api.dev.weflux.cn"',
   },
   defineConstants: {},
   mini: {},

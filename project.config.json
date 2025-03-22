@@ -1,7 +1,7 @@
 {
   "miniprogramRoot": "",
-  "projectname": "minichat-labs",
-  "description": "WeFlux Labs 小程序",
+  "projectname": "minichat-assistant",
+  "description": "课外小助教",
   "setting": {
     "urlCheck": true,
     "es6": false,
