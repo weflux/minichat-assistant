@@ -7,9 +7,9 @@ import "./index.less";
 
 export interface ContentItem {
   key: string;
-  poster_id: string,
-  poster_name: string,
-  poster_avatar_url: string,
+  author_id: string,
+  author_name: string,
+  author_avatar_url: string,
   content: string,
   attachments: string[],
   created_at: string,
@@ -27,9 +27,9 @@ export default function Index() {
   const [list] = useState<ContentItem[]>([
     {
       key: '1',
-      poster_id: '123',
-      poster_name: '航航妈妈',
-      poster_avatar_url: "",
+      author_id: '123',
+      author_name: 'XX妈妈',
+      author_avatar_url: "",
       content: '整个组件库是依赖开源项目 Vant Weapp\n' +
         '      的代码经过全量编译而来，所有样式文件及代码结构都与其保持高度一致，只是生命周期经过改造使其支持\n' +
         '      React，很大程度避免了重新造轮子带来的各种问题，同时保留了 Vant Weapp\n' +
@@ -38,9 +38,9 @@ export default function Index() {
       attachments: [],
     }, {
       key: '2',
-      poster_id: '123',
-      poster_name: '航航妈妈',
-      poster_avatar_url: "",
+      author_id: '123',
+      author_name: 'XX妈妈',
+      author_avatar_url: "",
       content: '第二天打卡内容',
       created_at: '2025-03-22',
       attachments: [],
@@ -65,14 +65,14 @@ export default function Index() {
               <View>
                 <Row>
                   <Col span={4}>
-                    <Image src={item.poster_avatar_url} round width={100} height={100}
+                    <Image src={item.author_avatar_url} round width={100} height={100}
                       className='flex items-center justify-center'
                     />
                   </Col>
                   <Col span={20}>
                     <Row>
                       <Col span={24}>
-                        <Text className='font-bold'>{item.poster_name}</Text>
+                        <Text className='font-bold'>{item.author_name}</Text>
                       </Col>
                       <Col span={24}>
                         <Text>

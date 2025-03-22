@@ -1,5 +1,5 @@
 import {View} from "@tarojs/components";
-import {Cell, CellGroup, Col, Divider, Grid, GridItem, Icon, Image, Row} from "@antmjs/vantui";
+import {Cell, CellGroup, Col, Grid, GridItem, Icon, Image, Row} from "@antmjs/vantui";
 import {useUserStore} from "src/stores/user-store";
 import {useEffect} from "react";
 import Taro from "@tarojs/taro";
@@ -63,7 +63,6 @@ const Profile = () => {
               </View>
             </Col>
           </Row>
-          <Divider />
           <Grid columnNum={3}>
             <GridItem icon='smile-o' text='1' />
             <GridItem icon='fire-o' text='29' />
@@ -75,18 +74,6 @@ const Profile = () => {
             <Cell title='退出登录' onClick={handleLogout} />
           </CellGroup>
         </View>
-        {/*<View className='mt-10 px-4 w-full flex flex-col items-center'>*/}
-        {/*  <Image src={user?.avatarUrl ?? ""} round width={200} height={200}/>*/}
-        {/*  <View className='mt-4'>{user?.displayName}</View>*/}
-        {/*  {user?.id && (*/}
-        {/*    <View>*/}
-        {/*      <Button type='default' onClick={handleUpdateProfile}>获取昵称和头像</Button>*/}
-        {/*      <Button type='default' onClick={removeUser}>*/}
-        {/*        退出*/}
-        {/*      </Button>*/}
-        {/*    </View>*/}
-        {/*  )}*/}
-        {/*</View>*/}
       </View>
     </View>
   )

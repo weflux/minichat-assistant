@@ -11,10 +11,10 @@ export default defineAppConfig({
         text: '首页',
       },
       {
-        pagePath: 'pages/post/index',
+        pagePath: 'pages/editor/index',
         iconPath: 'assets/tabbar/round_add.png',
         selectedIconPath: 'assets/tabbar/round_add_fill.png',
-        text: '发布',
+        text: '发表',
       },
       {
         pagePath: 'pages/profile/index',
@@ -28,7 +28,7 @@ export default defineAppConfig({
     "pages/index/index", // 首页
     "pages/profile/index", // 我的
     "pages/login/index", //登录页
-    "pages/post/index", // 发布
+    "pages/editor/index", // 发布
     "pages/content/index", // 内容
     "pages/class/index", // 课程
     "pages/student/index", // 学生
