@@ -29,6 +29,9 @@ export default defineAppConfig({
     "pages/profile/index", // 我的
     "pages/login/index", //登录页
     "pages/post/index", // 发布
+    "pages/content/index", // 内容
+    "pages/class/index", // 课程
+    "pages/student/index", // 学生
   ],
   subPackages: [
     {
