@@ -1,7 +1,7 @@
 import {Text, View} from "@tarojs/components";
 import {Col, Grid, GridItem, Image, NoticeBar, Popup, Row, Search, VirtualList} from "@antmjs/vantui";
 import {useUserStore} from "src/stores/user-store";
-import Taro, {useDidHide } from "@tarojs/taro"
+import Taro, {useDidHide} from "@tarojs/taro"
 import React, {useEffect, useState} from "react"
 import "./index.less";
 import FloatPostButton from "./post_button";
@@ -58,10 +58,12 @@ export default function Index() {
   const handleShowPost = () => {
     setShowPost(true);
   }
-  const handlePost = () => {
-    Taro.navigateTo({
-      url: "/pages/editor/index",
-    });
+  const handlePost = (postType: number) => {
+    return () => {
+      Taro.navigateTo({
+        url: `/pages/editor/index?postType=${postType}`,
+      });
+    }
   }
 
   return (
@@ -106,9 +108,9 @@ export default function Index() {
       </View>
       <Popup show={showPost} onClose={() => setShowPost(!showPost)} position='bottom'>
         <Grid columnNum='3'>
-          <GridItem icon='photo-o' text='发想法' onClick={handlePost} />
-          <GridItem icon='photo-o' text='发文章' onClick={handlePost} />
-          <GridItem icon='photo-o' text='发打卡' onClick={handlePost} />
+          <GridItem icon='photo-o' text='发想法' onClick={handlePost(1)} />
+          <GridItem icon='photo-o' text='发文章' onClick={handlePost(2)} />
+          <GridItem icon='photo-o' text='发打卡' onClick={handlePost(3)} />
         </Grid>
       </Popup>
       <FloatPostButton onClick={handleShowPost} />
