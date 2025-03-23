@@ -8,14 +8,6 @@ const Post = () => {
     placeholder: '输入试试...'
   })
 
-  // useLoad(() => {
-  //   Taro.hideTabBar()
-  // })
-  //
-  // useUnload(() => {
-  //   Taro.showTabBar()
-  // })
-
   const [typeSelectorOpened, setTypeSelectorOpened] = useState<boolean>(false)
   const [editorCtx, setEditorCtx] = useState(null)
 
@@ -29,11 +21,6 @@ const Post = () => {
     setTypeSelectorOpened(true)
   }
 
-  const handleGoBack = () => {
-    Taro.navigateTo({
-      url: '/pages/index/index',
-    })
-  }
 
   const handleSaveDraftAndBack = () => {
     Toast.show({message: "草稿保存成功"})
@@ -50,7 +37,7 @@ const Post = () => {
   return (
     <View>
       <View className='m-2 bg-white rounded-md'>
-        <Editor id='editor' className='editor rounded-md' placeholder={state.placeholder} onReady={editorReady}/>
+        <Editor id='editor' className='editor rounded-md' placeholder={state.placeholder} onReady={editorReady} />
       </View>
       <View className='fixed bottom-0 left-0 right-0'>
         <Row>
