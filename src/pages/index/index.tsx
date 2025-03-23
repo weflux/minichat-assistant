@@ -1,7 +1,7 @@
 import {Text, View} from "@tarojs/components";
-import {Col, Image, NoticeBar, Row, Search, VirtualList} from "@antmjs/vantui";
+import {Col, Grid, GridItem, Image, NoticeBar, Popup, Row, Search, VirtualList} from "@antmjs/vantui";
 import {useUserStore} from "src/stores/user-store";
-import Taro from "@tarojs/taro"
+import Taro, {useDidHide } from "@tarojs/taro"
 import React, {useEffect, useState} from "react"
 import "./index.less";
 import FloatPostButton from "./post_button";
@@ -18,12 +18,19 @@ export interface ContentItem {
 
 export default function Index() {
   const user = useUserStore.use.user();
+
+  const [showPost, setShowPost] = useState(false);
+
   useEffect(() => {
     if (!user?.id)
       Taro.navigateTo({
         url: "/pages/login/index",
       });
   }, [user?.id]);
+
+  useDidHide(() => {
+    setShowPost(false)
+  })
 
   const [list] = useState<ContentItem[]>([
     {
@@ -48,8 +55,13 @@ export default function Index() {
     }
   ]);
 
+  const handleShowPost = () => {
+    setShowPost(true);
+  }
   const handlePost = () => {
-
+    Taro.navigateTo({
+      url: "/pages/editor/index",
+    });
   }
 
   return (
@@ -59,7 +71,7 @@ export default function Index() {
         leftIcon='volume-o'
         text='在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准。'
       />
-      <View className='m-2'>
+      <View className='mt-2'>
         <VirtualList
           style={{padding: 10, boxSizing: 'border-box'}}
           height='calc(100vh - 125px)'
@@ -92,7 +104,14 @@ export default function Index() {
           })}
         />
       </View>
-      <FloatPostButton onClick={handlePost} />
+      <Popup show={showPost} onClose={() => setShowPost(!showPost)} position='bottom'>
+        <Grid columnNum='3'>
+          <GridItem icon='photo-o' text='发想法' onClick={handlePost} />
+          <GridItem icon='photo-o' text='发文章' onClick={handlePost} />
+          <GridItem icon='photo-o' text='发打卡' onClick={handlePost} />
+        </Grid>
+      </Popup>
+      <FloatPostButton onClick={handleShowPost} />
     </View>
   );
 }
