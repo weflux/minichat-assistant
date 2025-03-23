@@ -1,9 +1,10 @@
 import {Text, View} from "@tarojs/components";
-import {Col, Ellipsis, Image, NoticeBar, Row, Search, VirtualList} from "@antmjs/vantui";
+import {Col, Image, NoticeBar, Row, Search, VirtualList} from "@antmjs/vantui";
 import {useUserStore} from "src/stores/user-store";
 import Taro from "@tarojs/taro"
 import React, {useEffect, useState} from "react"
 import "./index.less";
+import FloatPostButton from "./post_button";
 
 export interface ContentItem {
   key: string;
@@ -47,6 +48,10 @@ export default function Index() {
     }
   ]);
 
+  const handlePost = () => {
+
+  }
+
   return (
     <View className='bg-white'>
       <Search placeholder='请输入搜过关键字' />
@@ -60,7 +65,7 @@ export default function Index() {
           height='calc(100vh - 125px)'
           dataSource={list}
           showCount={3}
-          ItemRender={React.memo(({index, item, className, ...props}) => {
+          ItemRender={React.memo(({item}) => {
             return (
               <View>
                 <Row>
@@ -78,9 +83,6 @@ export default function Index() {
                         <Text>
                           {item.content}
                         </Text>
-                        {/*<Ellipsis rows={4}>*/}
-                        {/*  {item.content}*/}
-                        {/*</Ellipsis>*/}
                       </Col>
                     </Row>
                   </Col>
@@ -90,6 +92,7 @@ export default function Index() {
           })}
         />
       </View>
+      <FloatPostButton onClick={handlePost} />
     </View>
   );
 }
