@@ -12,7 +12,8 @@ import {
   Popup,
   PullToRefresh,
   Row,
-  Search
+  Search,
+  Sticky
 } from "@antmjs/vantui";
 import {useUserStore} from "src/stores/user-store";
 import Taro, {useDidHide} from "@tarojs/taro"
@@ -145,11 +146,13 @@ export default function Index() {
 
   return (
     <View className='bg-white h-full'>
-      <Search placeholder='请输入搜过关键字' />
-      <NoticeBar
-        leftIcon='volume-o'
-        text='在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准。'
-      />
+      <Sticky>
+        <Search placeholder='请输入搜过关键字'/>
+        <NoticeBar
+          leftIcon='volume-o'
+          text='在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准。'
+        />
+      </Sticky>
       <View className='mt-2'>
         <PullToRefresh onRefresh={onRefresh}>
           <View>
@@ -158,7 +161,7 @@ export default function Index() {
                   <Row>
                     <Col span={4}>
                       <Image src={item.author_avatar_url} round width={100} height={100}
-                        className='flex items-center justify-center'
+                             className='flex items-center justify-center'
                       />
                     </Col>
                     <Col span={20}>
@@ -178,17 +181,17 @@ export default function Index() {
               )
             )}
           </View>
-          <InfiniteScroll loadMore={loadMore} ref={InfiniteScrollInstance} />
+          <InfiniteScroll loadMore={loadMore} ref={InfiniteScrollInstance}/>
         </PullToRefresh>
       </View>
       <Popup show={showPost} onClose={() => setShowPost(!showPost)} position='bottom'>
         <Grid columnNum='3'>
-          <GridItem icon='photo-o' text='发想法' onClick={handlePost(1)} />
-          <GridItem icon='photo-o' text='发文章' onClick={handlePost(2)} />
-          <GridItem icon='photo-o' text='发打卡' onClick={handlePost(3)} />
+          <GridItem icon='photo-o' text='发想法' onClick={handlePost(1)}/>
+          <GridItem icon='photo-o' text='发文章' onClick={handlePost(2)}/>
+          <GridItem icon='photo-o' text='发打卡' onClick={handlePost(3)}/>
         </Grid>
       </Popup>
-      <FloatPostButton onClick={handleShowPost} />
+      <FloatPostButton onClick={handleShowPost}/>
     </View>
   );
 }

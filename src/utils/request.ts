@@ -53,7 +53,11 @@ const request = {
       return;
     }
     if (result.statusCode === 200) {
-      return result.data.data
+      if (result.data.code === 0) {
+        return result.data.data
+      } else {
+        Taro.showToast({title: result.data.message, duration: 3000, icon: "error"})
+      }
     } else if (result.statusCode == 401) {
       // 清除Token
       Taro.navigateTo({url: '/pages/login/index'})
