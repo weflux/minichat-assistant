@@ -5,18 +5,15 @@ import {useUserStore} from "src/stores/user-store";
 // 获取后端地址前缀
 const baseUrl = process.env.API_BASE_URL;
 const env = process.env.NODE_ENV === 'development' ? 'development' : 'production'
+
 console.log('编译环境：', env, baseUrl)
 
 // 后端返回的结构体
 interface APIResponse<T> {
   data: T,
-  success: boolean,
   code: string,
   message: string,
 }
-
-const TOKEN_KEY = "TOKEN_KEY"
-const TOKEN_VALUE = "TOKEN_VALUE"
 
 const request = {
   baseUrl: baseUrl,
@@ -31,7 +28,6 @@ const request = {
 
     const token = useUserStore.getState().token;
     if (token) {
-      // header.token = token
       header['Authorization'] = `Bearer ${token}`;
     }
 
@@ -60,9 +56,7 @@ const request = {
       return result.data.data
     } else if (result.statusCode == 401) {
       // 清除Token
-      Taro.removeStorageSync(TOKEN_KEY)
-      Taro.removeStorageSync(TOKEN_VALUE)
-      console.error('未登录')
+      Taro.navigateTo({url: '/pages/login/index'})
     } else {
       console.error("Request error", result.data)
       const resp = result.data as APIResponse<any>

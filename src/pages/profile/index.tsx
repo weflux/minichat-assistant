@@ -54,7 +54,6 @@ const Profile = () => {
               <View className='flex items-center'>
                 <Space>
                   <View>{user?.displayName}</View>
-                  <Icon name='miniprogram-o' onClick={handleUpdateProfile}></Icon>
                 </Space>
               </View>
             </Col>
@@ -67,6 +66,7 @@ const Profile = () => {
         </View>
         <View className='mt-6 rounded-md'>
           <CellGroup>
+            <Cell title='更新头像和昵称' onClick={handleUpdateProfile} />
             <Cell title='退出登录' onClick={handleLogout} />
           </CellGroup>
         </View>

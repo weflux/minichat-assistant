@@ -43,7 +43,7 @@ const Post = () => {
       <View className='m-2 bg-white rounded-md'>
         <Editor id='editor' className='editor rounded-md' placeholder={editorParams.placeholder} onReady={editorReady} />
       </View>
-      <View className='fixed bottom-0 left-0 right-0'>
+      <View className='fixed bottom-3 left-0 right-0'>
         <Row>
           <Col span={6}>
             <View className='left-0'>

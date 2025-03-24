@@ -1,7 +1,7 @@
 import {View} from '@tarojs/components'
-import {Button, MiniLoginButton} from '@antmjs/vantui'
+import {MiniLoginButton} from '@antmjs/vantui'
 import {useUserStore} from 'src/stores/user-store'
-import Taro from '@tarojs/taro'
+import Taro, {useLoad} from '@tarojs/taro'
 import {useEffect} from 'react'
 import UserAPI from "src/api/auth"
 
@@ -10,8 +10,12 @@ export default function Index() {
   const user = useUserStore.use.user()
   const setUser = useUserStore.use.setUser()
 
-  Button.config({
-    asyncLoading: true, // click异步事件触发loading状态手动开启
+  const removeUser = useUserStore.use.removeUser();
+  const removeToken = useUserStore.use.removeToken();
+
+  useLoad(() => {
+    removeUser()
+    removeToken()
   })
 
   useEffect(() => {
