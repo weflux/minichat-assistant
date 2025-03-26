@@ -1,8 +1,11 @@
 import {View} from "@tarojs/components"
+import {Empty} from "@antmjs/vantui"
 
 const Index = () => {
   return (
-    <View>成长系统施工中...</View>
+    <View>
+      <Empty description='成长系统施工中...'/>
+    </View>
   )
 }
 

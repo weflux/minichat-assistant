@@ -1,7 +1,7 @@
 import Taro, {useRouter} from "@tarojs/taro";
 import {Editor, View} from "@tarojs/components"
 import {useState} from "react"
-import {Button, Col, Row, Space, Toast} from "@antmjs/vantui"
+import {Button, Col, Row, Toast} from "@antmjs/vantui"
 
 const Post = () => {
   const router = useRouter()
@@ -41,22 +41,18 @@ const Post = () => {
   return (
     <View>
       <View className='m-2 bg-white rounded-md'>
-        <Editor id='editor' className='editor rounded-md' placeholder={editorParams.placeholder} onReady={editorReady} />
+        <Editor id='editor' className='editor rounded-md' placeholder={editorParams.placeholder} onReady={editorReady}/>
       </View>
-      <View className='fixed bottom-3 left-0 right-0'>
+      <View className='fixed bottom-4 left-0 right-0'>
         <Row>
           <Col span={6}>
-            <View className='left-0'>
-              <Button type='default' plain onClick={handleSaveDraftAndBack}>存草稿</Button>
-            </View>
+            <Button className='w-full' type='default' plain onClick={handleSaveDraftAndBack}>存草稿</Button>
           </Col>
-          <Col span={14} offset={4}>
-            <View className='right-0'>
-              <Space>
-                <Button type='primary' onClick={handlePublishToHome}>发布到主页</Button>
-                <Button type='primary' onClick={handlePublishToClass}>发布到课程</Button>
-              </Space>
-            </View>
+          <Col span={9}>
+            <Button className='w-full' type='primary' onClick={handlePublishToHome}>发布到主页</Button>
+          </Col>
+          <Col span={9}>
+            <Button className='w-full' type='primary' onClick={handlePublishToClass}>发布到课程</Button>
           </Col>
         </Row>
       </View>

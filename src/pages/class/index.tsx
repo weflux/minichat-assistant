@@ -1,9 +1,10 @@
 import {View} from "@tarojs/components"
+import {Empty} from "@antmjs/vantui"
 
 const List = () => {
   return (
     <View>
-      <View>我的课程</View>
+      <Empty description='我的课程' />
     </View>
   )
 }

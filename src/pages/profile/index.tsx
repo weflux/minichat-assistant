@@ -1,14 +1,18 @@
 import {View} from "@tarojs/components";
-import {Cell, CellGroup, Col, Grid, GridItem, Icon, Image, Row, Space} from "@antmjs/vantui";
+import {Cell, CellGroup, Col, Grid, GridItem, Image, Row, Space} from "@antmjs/vantui";
 import {useUserStore} from "src/stores/user-store";
-import {useEffect} from "react";
-import Taro from "@tarojs/taro";
-import UserAPI from "src/api/auth"
+import {useEffect, useState} from "react";
+import Taro, {useDidShow} from "@tarojs/taro";
+import UsersAPI from "src/api/auth"
+import ProfileAPI from "src/api/profile"
 
 const Profile = () => {
   const user = useUserStore.use.user();
   const setUser = useUserStore.use.setUser()
   const removeUser = useUserStore.use.removeUser();
+  const [profile, setProfile] = useState<{ students: number, posts: number, classes: number }>({
+    classes: 0, posts: 0, students: 0
+  })
 
   const handleLogout = () => {
     removeUser();
@@ -21,12 +25,21 @@ const Profile = () => {
       });
   }, [user?.id]);
 
+  useDidShow(async () => {
+    const {students, posts, classes} = await ProfileAPI.getProfile({})
+    setProfile({
+      students: students,
+      posts: posts,
+      classes: classes,
+    })
+  })
+
   const handleUpdateProfile = async () => {
     const {userInfo} = await Taro.getUserProfile({
       desc: "用于完善用户资料"
     })
     console.log("user_info", userInfo)
-    const newUser = await UserAPI.uploadProfile({
+    const newUser = await UsersAPI.uploadProfile({
       display_name: userInfo.nickName,
       avatar_url: userInfo.avatarUrl,
     })
@@ -59,9 +72,15 @@ const Profile = () => {
             </Col>
           </Row>
           <Grid columnNum={3}>
-            <GridItem icon='smile-o' text='1' onClick={() => Taro.navigateTo({url: '/pages/student/index'})} />
-            <GridItem icon='fire-o' text='29' onClick={() => Taro.navigateTo({url: '/pages/content/index'})} />
-            <GridItem icon='award-o' text='3' onClick={() => Taro.navigateTo({url: '/pages/class/index'})} />
+            <GridItem onClick={() => Taro.navigateTo({url: '/pages/student/index'})}>
+              <Cell title='学生' value={profile.students} />
+            </GridItem>
+            <GridItem onClick={() => Taro.navigateTo({url: '/pages/content/index'})}>
+              <Cell title='内容' value={profile.posts} />
+            </GridItem>
+            <GridItem onClick={() => Taro.navigateTo({url: '/pages/class/index'})}>
+              <Cell title='课程' value={profile.classes} />
+            </GridItem>
           </Grid>
         </View>
         <View className='mt-6 rounded-md'>

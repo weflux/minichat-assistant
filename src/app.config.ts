@@ -33,7 +33,8 @@ export default defineAppConfig({
     "pages/content/index", // 内容
     "pages/class/index", // 课程
     "pages/student/index", // 学生
-    "pages/growth/index", // 学生
+    "pages/student/create", // 新增学生
+    "pages/growth/index", // 成长系统
   ],
   subPackages: [
     {

@@ -1,7 +1,7 @@
 import {GetTokenParams, GetTokenResponse, UpdateProfileRequest, UserInfo} from "src/api/types/auth"
 import request from "src/utils/request"
 
-namespace UserAPI {
+namespace UsersAPI {
   export function getToken(data: GetTokenParams): Promise<GetTokenResponse> {
     return request.post('/api/v1/token', data)
   }
@@ -12,4 +12,4 @@ namespace UserAPI {
 }
 
 
-export default UserAPI
+export default UsersAPI

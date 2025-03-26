@@ -3,7 +3,7 @@ import {MiniLoginButton} from '@antmjs/vantui'
 import {useUserStore} from 'src/stores/user-store'
 import Taro, {useLoad} from '@tarojs/taro'
 import {useEffect} from 'react'
-import UserAPI from "src/api/auth"
+import UsersAPI from "src/api/auth"
 
 export default function Index() {
   const setToken = useUserStore.use.setToken()
@@ -30,7 +30,7 @@ export default function Index() {
 
   const handleLogin = async ({code}: { code: string }) => {
     console.log('authCode', code)
-    const data = await UserAPI.getToken({
+    const data = await UsersAPI.getToken({
       grant_type: 'weixin_miniprogram',
       authorization_code: code
     })

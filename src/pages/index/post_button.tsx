@@ -8,7 +8,7 @@ interface FloatPostButtonProps {
 const FloatPostButton = (props: FloatPostButtonProps) => {
   return (
     <View className='float-post-button'>
-      <Icon name='add' color='red' size='100' onClick={props.onClick} />
+      <Icon name='add' color='red' size='120' onClick={props.onClick} />
     </View>
   )
 }
