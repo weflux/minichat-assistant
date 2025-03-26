@@ -26,11 +26,18 @@ const Profile = () => {
   }, [user?.id]);
 
   useDidShow(async () => {
-    const {students, posts, classes} = await ProfileAPI.getProfile({})
+    const {students, posts, classes, user: u} = await ProfileAPI.getProfile({})
     setProfile({
       students: students,
       posts: posts,
       classes: classes,
+    })
+    setUser({
+      id: u.id,
+      name: u.name,
+      avatarUrl: u.avatar_url,
+      displayName: u.display_name,
+      role: "user"
     })
   })
 
@@ -60,7 +67,7 @@ const Profile = () => {
           <Row className='m-2 flex items-center'>
             <Col span={4}>
               <Image src={user?.avatarUrl ?? ""} round width={100} height={100}
-                className='flex items-center justify-center'
+                     className='flex items-center justify-center'
               />
             </Col>
             <Col span={20}>
@@ -73,20 +80,20 @@ const Profile = () => {
           </Row>
           <Grid columnNum={3}>
             <GridItem onClick={() => Taro.navigateTo({url: '/pages/student/index'})}>
-              <Cell title='学生' value={profile.students} />
+              <Cell title='学生' value={profile.students}/>
             </GridItem>
             <GridItem onClick={() => Taro.navigateTo({url: '/pages/content/index'})}>
-              <Cell title='内容' value={profile.posts} />
+              <Cell title='内容' value={profile.posts}/>
             </GridItem>
             <GridItem onClick={() => Taro.navigateTo({url: '/pages/class/index'})}>
-              <Cell title='课程' value={profile.classes} />
+              <Cell title='课程' value={profile.classes}/>
             </GridItem>
           </Grid>
         </View>
         <View className='mt-6 rounded-md'>
           <CellGroup>
-            <Cell title='更新头像和昵称' onClick={handleUpdateProfile} />
-            <Cell title='退出登录' onClick={handleLogout} />
+            <Cell title='更新头像和昵称' onClick={handleUpdateProfile}/>
+            <Cell title='退出登录' onClick={handleLogout}/>
           </CellGroup>
         </View>
       </View>
