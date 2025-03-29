@@ -24,4 +24,6 @@ export interface GetTokenResponse {
 export interface UpdateProfileRequest {
   display_name: string
   avatar_url: string
+  copy_url: boolean
+  ext: string
 }

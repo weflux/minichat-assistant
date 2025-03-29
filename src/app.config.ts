@@ -28,10 +28,11 @@ export default defineAppConfig({
     "pages/index/index", // 首页
     "pages/profile/index", // 我的
     "pages/login/index", //登录页
-    "pages/post/index", // 发布
+    "pages/post/index", // 内容
     "pages/editor/index", // 发布
-    "pages/content/index", // 内容
+    "pages/editor/video", // 视频
     "pages/class/index", // 课程
+    "pages/class/create", // 添加课程
     "pages/student/index", // 学生
     "pages/student/create", // 新增学生
     "pages/growth/index", // 成长系统

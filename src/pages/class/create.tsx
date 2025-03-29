@@ -1,16 +1,20 @@
+import Taro, {useRouter} from '@tarojs/taro'
 import {Input, View} from "@tarojs/components"
 import {Button, Dialog, Form, FormItem} from "@antmjs/vantui"
-import StudentsAPI from "src/api/students"
-import Taro from "@tarojs/taro"
 import {useState} from "react"
+import ClassesAPI from "src/api/classes"
+
 
 const Create = () => {
+  const router = useRouter()
+  const {params} = router;
+  console.log(params)
+  Taro.setNavigationBarTitle({title: `添加 ${params.studentName} 的课程`})
 
   const formIt = Form.useForm()
-  const [formValues] = useState<{ name: string }>({name: ''})
+  const [formValues] = useState<{ name: string, studentId?: string }>({name: '', studentId: params.studentId})
 
   const handleSubmit = async () => {
-
     formIt.validateFields((errorMessage, fieldValues) => {
 
       console.log(errorMessage, fieldValues)
@@ -22,8 +26,9 @@ const Create = () => {
         })
         return console.info('errorMessage', errorMessage)
       } else {
-        StudentsAPI.createStudent({
+        ClassesAPI.createClass({
           name: fieldValues["name"],
+          student_id: params.studentId || '',
         }).then(() => {
           Taro.navigateBack({
             delta: 1,
@@ -37,23 +42,18 @@ const Create = () => {
   return (
     <View>
       <Form form={formIt} initialValues={formValues}>
-        <FormItem
-          label='学生姓名'
-          name='name'
-          required
-          trigger='onInput'
+        <FormItem label='课程名称' name='name' required trigger='onInput'
           validateTrigger='onBlur'
-          // taro的input的onInput事件返回对应表单的最终值为e.detail.value
           valueFormat={(e) => e.detail.value}
         >
-          <Input placeholder='请输入学生姓名' />
+
+          <Input placeholder='请输入课程姓名' />
         </FormItem>
         <Button className='fixed w-full bottom-4' type='primary' onClick={handleSubmit}>提交</Button>
       </Form>
       <Dialog id='form-dialog' />
-
     </View>
   )
 }
 
-export default Create
+export default Create;

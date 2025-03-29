@@ -8,6 +8,7 @@ const Post = () => {
   const {params} = router;
   console.log(params)
   // const [postType, setPostType] = useState<number>(0)
+  const [editorCtx, setEditorCtx] = useState({})
 
   const [editorParams, setEditorParams] = useState({
     placeholder: '输入试试...'
@@ -17,8 +18,12 @@ const Post = () => {
 
   const editorReady = () => {
     Taro.createSelectorQuery().select('#editor').context((res) => {
-      // setEditorCtx(res.context)
+      setEditorCtx(res.context)
     }).exec()
+  }
+
+  const handleUndo = () => {
+    editorCtx.undo()
   }
 
   // const handleAddAttachment = () => {

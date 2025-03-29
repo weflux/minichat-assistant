@@ -10,7 +10,7 @@ const fs = require("fs");
  * 需要拷贝的文件
  * Taro不会把 private.config.json 文件打包，所以使用copy直接将文件拷贝到项目根目录
  * 这样开发者工具才能读取到本地私有配置项
-*/
+ */
 const COPY_FILES = ["project.private.config.json"]
 
 process.env.TARO_ENV = process.env.TARO_ENV ?? "weapp";
@@ -24,7 +24,7 @@ const generateCopyConfig = (list) => {
         to: `${process.env.TARO_ENV}/${file}`,
       });
   });
-  return { patterns };
+  return {patterns};
 };
 
 const config = {
@@ -96,7 +96,10 @@ const config = {
       enable: true,
     },
   },
-  plugins: [["@tarojs/plugin-framework-react", { reactMode: "concurrent" }]],
+  plugins: [
+    ["@tarojs/plugin-framework-react", {reactMode: "concurrent"}],
+    "@taro-hooks/plugin-react"
+  ],
 };
 
 module.exports = function (merge) {

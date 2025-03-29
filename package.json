@@ -1,5 +1,5 @@
 {
-  "name": "minichat-assistant",
+  "name": "fluxchat-assistant-weapp",
   "version": "1.0.1",
   "private": true,
   "description": "Taro3.6 + React + TypeScript + tailwindcss + zustand + @antmjs/vantui3.x 微信/支付宝小程序模板",
@@ -41,6 +41,7 @@
     "@antmjs/plugin-global-fix": "^2.4.1",
     "@antmjs/vantui": "^3.6.2",
     "@babel/runtime": "^7.14.5",
+    "@taro-hooks/plugin-react": "^2.1.0",
     "@tarojs/components": "3.6.35",
     "@tarojs/helper": "3.6.35",
     "@tarojs/plugin-framework-react": "3.6.35",
@@ -57,6 +58,7 @@
     "query-string": "^9.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "taro-hooks": "^2.1.0",
     "umtrack-alipay": "^2.8.0",
     "umtrack-wx": "^2.8.0",
     "zustand": "^5.0.1"

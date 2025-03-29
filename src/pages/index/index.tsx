@@ -17,9 +17,15 @@ import {
 } from "@antmjs/vantui";
 import {useUserStore} from "src/stores/user-store";
 import Taro, {useDidHide} from "@tarojs/taro"
-import React, {useEffect, useRef, useState} from "react"
+import {useEffect, useRef, useState} from "react"
+import FilesAPI from "src/api/files"
 import "./index.less";
 import FloatPostButton from "./post_button";
+
+function getFileExt(filename: string): string | undefined {
+  const parts = filename.split('.');
+  return parts.length > 1 ? parts.pop()! : undefined;
+}
 
 export interface ContentItem {
   key: string;
@@ -33,7 +39,7 @@ export interface ContentItem {
 
 export default function Index() {
   const user = useUserStore.use.user();
-  const InfiniteScrollInstance = useRef<InfiniteScrollInstance>()
+  const infiniteScrollInstance = useRef<InfiniteScrollInstance>()
 
 
   const [showPost, setShowPost] = useState(false);
@@ -124,13 +130,67 @@ export default function Index() {
   const handleShowPost = () => {
     setShowPost(true);
   }
-  const handlePost = (postType: number) => {
-    return () => {
-      Taro.navigateTo({
-        url: `/pages/editor/index?postType=${postType}`,
-      });
+
+  const handlePostVideo = async () => {
+    try {
+      const cb = await Taro.chooseVideo({
+        sourceType: ['album', 'camera'],
+        camera: 'back',
+        // maxDuration: 60 * 10
+      })
+      const filePath = cb.tempFilePath
+      const width = cb.width
+      const height = cb.height
+      const ext = getFileExt(filePath)
+      const res = await FilesAPI.getPreSignedUrl({
+        category: "video",
+        ext: ext || ''
+      })
+      const wxfs = Taro.getFileSystemManager()
+      wxfs.readFile({
+        filePath: filePath,
+        success: function (succ) {
+          Taro.request({
+            url: res.upload_url,
+            method: "PUT",
+            data: succ.data,
+            success: function (res2) {
+              if (res2.statusCode === 200) {
+                Taro.navigateTo({
+                  url: `/pages/editor/video?videoUrl=${res.upload_url}&width=${width}&height=${height}`,
+                });
+              } else {
+                console.error(res2);
+              }
+            }
+          })
+        }
+      })
+    } catch (err) {
+      console.log(err)
     }
   }
+
+  const handlePostAudio = () => {
+    Taro.navigateTo({
+      url: `/pages/editor/index`,
+    });
+  }
+
+  const handlePostDoc = () => {
+    Taro.navigateTo({
+      url: `/pages/editor/index`,
+    });
+  }
+
+  // const handlePost = (postType: number) => {
+  //   console.log(postType)
+  //   return () => {
+  //     Taro.navigateTo({
+  //       url: `/pages/editor/video`,
+  //     });
+  //   }
+  // }
 
   const onRefresh: IPullToRefreshProps['onRefresh'] = () => {
     return new Promise(async (resolve) => {
@@ -147,7 +207,7 @@ export default function Index() {
   return (
     <View className='bg-white h-full'>
       <Sticky>
-        <Search placeholder='请输入搜过关键字'/>
+        <Search placeholder='请输入搜过关键字' />
         <NoticeBar
           leftIcon='volume-o'
           text='在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准。'
@@ -157,11 +217,11 @@ export default function Index() {
         <PullToRefresh onRefresh={onRefresh}>
           <View>
             {list.map((item, index) => (
-                <View key={`van-demo-goods-item-wrapper-infinite${index}`}>
+                <View key={`homeList-${index}`}>
                   <Row>
                     <Col span={4}>
                       <Image src={item.author_avatar_url} round width={100} height={100}
-                             className='flex items-center justify-center'
+                        className='flex items-center justify-center'
                       />
                     </Col>
                     <Col span={20}>
@@ -181,17 +241,17 @@ export default function Index() {
               )
             )}
           </View>
-          <InfiniteScroll loadMore={loadMore} ref={InfiniteScrollInstance}/>
+          <InfiniteScroll loadMore={loadMore} ref={infiniteScrollInstance} />
         </PullToRefresh>
       </View>
       <Popup show={showPost} onClose={() => setShowPost(!showPost)} position='bottom'>
         <Grid columnNum='3'>
-          <GridItem icon='photo-o' text='发想法' onClick={handlePost(1)}/>
-          <GridItem icon='photo-o' text='发文章' onClick={handlePost(2)}/>
-          <GridItem icon='photo-o' text='发打卡' onClick={handlePost(3)}/>
+          <GridItem icon='photo-o' text='发视频' onClick={handlePostVideo} />
+          <GridItem icon='photo-o' text='发语音' onClick={handlePostAudio} />
+          <GridItem icon='photo-o' text='发文章' onClick={handlePostDoc} />
         </Grid>
       </Popup>
-      <FloatPostButton onClick={handleShowPost}/>
+      <FloatPostButton onClick={handlePostVideo} />
     </View>
   );
 }

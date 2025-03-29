@@ -1,22 +1,12 @@
-import {Grid, GridItem} from "@antmjs/vantui";
-import {PageContainer} from "@tarojs/components"
-import Taro from "@tarojs/taro"
+import {View} from "@tarojs/components"
+import {Empty} from "@antmjs/vantui"
 
-const Index = () => {
-  const handlePost = () => {
-    Taro.navigateTo({
-      url: "/pages/editor/index",
-    });
-  }
+const List = () => {
   return (
-    <PageContainer>
-      <Grid columnNum='3'>
-        <GridItem icon='photo-o' text='发想法' onClick={handlePost} />
-        <GridItem icon='photo-o' text='发文章' onClick={handlePost} />
-        <GridItem icon='photo-o' text='发打卡' onClick={handlePost} />
-      </Grid>
-    </PageContainer>
+    <View>
+      <Empty description='我的内容' />
+    </View>
   )
 }
 
-export default Index;
+export default List;

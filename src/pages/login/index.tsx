@@ -59,7 +59,7 @@ export default function Index() {
 
   return (
     <View>
-      <View className='mt-10 px-4 w-full flex flex-col items-center'>
+      <View className='flex items-center justify-center h-screen'>
         <MiniLoginButton type='primary' onFail={handleFail} onGetLoginCode={handleLogin}>微信登录</MiniLoginButton>
       </View>
     </View>
