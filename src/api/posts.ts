@@ -6,7 +6,7 @@ namespace PostsAPI {
     return request.post("/api/v1/posts/create", data)
   }
 
-  export function homeList(data: HomeListRequest): Promise<HomeListResult> {
+  export function getHomeList(data: HomeListRequest): Promise<HomeListResult> {
     return request.post("/api/v1/posts/homeList", data)
   }
 }
