@@ -15,7 +15,7 @@ const MainLayout = (props: PropsWithChildren) => {
   })
 
   return (
-    <View className='bg-white h-full w-full'>
+    <View className='bg-white h-full w-full p-1'>
       {props.children}
     </View>
   )

@@ -9,6 +9,8 @@ const Index = () => {
       <Row>
         <Col span={24}>
           <Calendar
+            showSubtitle={false}
+            showTitle={false}
             poppable={false}
             showConfirm={false}
             minDate={minDate}

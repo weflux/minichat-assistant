@@ -14,7 +14,7 @@ export default defineAppConfig({
         pagePath: 'pages/growth/index',
         iconPath: 'assets/tabbar/selection.png',
         selectedIconPath: 'assets/tabbar/selection_fill.png',
-        text: '成就',
+        text: '成长',
       },
       {
         pagePath: 'pages/profile/index',

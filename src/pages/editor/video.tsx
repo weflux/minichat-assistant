@@ -64,12 +64,15 @@ const Index = () => {
   return (
     <MainLayout>
       <Form form={formIt} initialValues={formValues}>
-        <Textarea className='w-full' autoHeight maxlength={512} name='conent' value={content} onInput={(e) => {
+        <Textarea className='w-full border-gray-40' style='min-height: 30px;'
+          autoFocus maxlength={512} name='conent'
+          placeholder='请输入内容...'
+          onInput={(e) => {
           setContent(e.detail.value)
         }}
         />
-        <Video src={videoUrl}/>
-        <Divider/>
+        <Video src={videoUrl} />
+        <Divider />
 
         <FormItem
           name='classId'
@@ -80,7 +83,7 @@ const Index = () => {
           controllFlexEnd
           required
         >
-          <Picker idKey='id' mode='content' title='请选择' columns={classList}/>
+          <Picker idKey='id' mode='content' title='请选择' columns={classList} />
         </FormItem>
         <View className='fixed bottom-4 w-full'>
           <Button type='primary' className='w-full' onClick={handlePost}>确认发布</Button>

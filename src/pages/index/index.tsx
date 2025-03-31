@@ -35,6 +35,7 @@ export default function Index() {
   // const setToken = useUserStore.use.setToken()
   // const user = useUserStore.use.user()
   // const setUser = useUserStore.use.setUser()
+  const [loading, setLoading] = useState(false)
 
   const infiniteScrollInstance = useRef<InfiniteScrollInstance>()
   const [postList, setPostList] = useState<PostDetail[]>([])
@@ -100,6 +101,7 @@ export default function Index() {
       wxfs.readFile({
         filePath: filePath,
         success: function (succ) {
+          setLoading(true)
           Taro.request({
             url: res.upload_url,
             method: "PUT",
@@ -110,14 +112,18 @@ export default function Index() {
                   url: `/pages/editor/video?videoUrl=${res.upload_url}&width=${width}&height=${height}`,
                 });
               } else {
+                Taro.showToast({title: '视频上传失败'})
                 console.error(res2);
               }
+              setLoading(false)
             }
           })
         }
       })
     } catch (err) {
+      Taro.showToast({title: '视频上传失败'})
       console.log(err)
+      setLoading(false)
     }
   }
 
@@ -138,12 +144,12 @@ export default function Index() {
       <Sticky>
         <View>
           <Row className='bg-white w-full'>
-            <Col span='20'>
-              <Search placeholder='请输入搜过关键字' onBlur={(e) => setSearch(e.detail.value)} onSearch={onRefresh}/>
+            <Col span='19'>
+              <Search placeholder='请输入搜过关键字' onBlur={(e) => setSearch(e.detail.value)} onSearch={onRefresh} />
             </Col>
-            <Col span='4'>
+            <Col span='5'>
               <View className='flex items-center'>
-                <Button className='mt-1 mb-1' type='info' onClick={handlePostVideo} icon='add-o'/>
+                <Button className='mt-3 mr-2' size='small' type='info' onClick={handlePostVideo} icon='add-o' loading={loading} />
               </View>
             </Col>
           </Row>
@@ -157,7 +163,7 @@ export default function Index() {
                   <Row>
                     <Col span={4}>
                       <Image src={item.author_avatar_url} round width={100} height={100}
-                             className='flex items-center justify-center'
+                        className='flex items-center justify-center'
                       />
                     </Col>
                     <Col span={20}>
@@ -167,7 +173,7 @@ export default function Index() {
                         </Col>
                         <Col span={24}>
                           {item.type == 1 ? (
-                            <Video src={item.attachment_url}/>
+                            <Video src={item.attachment_url} />
                           ) : (<View></View>)}
                           <Text>
                             {item.content}
@@ -180,14 +186,14 @@ export default function Index() {
               )
             )}
           </View>
-          <InfiniteScroll loadMore={loadMore} ref={infiniteScrollInstance}/>
+          <InfiniteScroll loadMore={loadMore} ref={infiniteScrollInstance} />
         </PullToRefresh>
       </View>
       <Popup show={showPost} onClose={() => setShowPost(!showPost)} position='bottom'>
         <Grid columnNum='3'>
-          <GridItem icon='photo-o' text='发视频' onClick={handlePostVideo}/>
-          <GridItem icon='photo-o' text='发语音' onClick={handlePostAudio}/>
-          <GridItem icon='photo-o' text='发文章' onClick={handlePostDoc}/>
+          <GridItem icon='photo-o' text='发视频' onClick={handlePostVideo} />
+          <GridItem icon='photo-o' text='发语音' onClick={handlePostAudio} />
+          <GridItem icon='photo-o' text='发文章' onClick={handlePostDoc} />
         </Grid>
       </Popup>
       {/*<FloatPostButton onClick={handlePostVideo} />*/}
