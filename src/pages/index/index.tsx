@@ -1,5 +1,6 @@
 import {Text, Video, View} from "@tarojs/components";
 import {
+  Button,
   Col,
   Grid,
   GridItem,
@@ -8,7 +9,6 @@ import {
   InfiniteScrollInstance,
   InfiniteScrollProps,
   IPullToRefreshProps,
-  NoticeBar,
   Popup,
   PullToRefresh,
   Row,
@@ -22,7 +22,6 @@ import FilesAPI from "src/api/files"
 import {PostDetail} from "src/api/types/posts"
 import PostsAPI from "src/api/posts"
 import "./index.less";
-import FloatPostButton from "./post_button";
 
 function getFileExt(filename: string): string | undefined {
   const parts = filename.split('.');
@@ -46,6 +45,7 @@ export default function Index() {
 
   const [showPost, setShowPost] = useState(false);
   const [cursor, setCursor] = useState<string>('0')
+  const [search, setSearch] = useState<string>('')
 
   // useLoad(async () => {
   //   const {list, max_cursor, size} = await PostsAPI.getHomeList({cursor: cursor})
@@ -59,7 +59,7 @@ export default function Index() {
   const loadMore: InfiniteScrollProps['loadMore'] = async () => {
     console.log("loadMore")
     return new Promise(async (resolve) => {
-      const {list, max_cursor, limit, size} = await PostsAPI.getHomeList({cursor: cursor})
+      const {list, max_cursor, limit, size} = await PostsAPI.getHomeList({max_cursor: cursor, search: search})
       if (size > 0) {
         const newList = postList.concat(list)
         setPostList(newList)
@@ -72,7 +72,7 @@ export default function Index() {
   const onRefresh: IPullToRefreshProps['onRefresh'] = async () => {
     console.log("refresh")
     return new Promise(async (resolve) => {
-      const {list, max_cursor, size} = await PostsAPI.getHomeList({cursor: 0})
+      const {list, max_cursor, size} = await PostsAPI.getHomeList({max_cursor: '0', search: search})
       if (size > 0) {
         // const newList = postList.concat(list)
         setPostList(list)
@@ -164,11 +164,18 @@ export default function Index() {
   return (
     <View className='bg-white h-full'>
       <Sticky>
-        <Search placeholder='请输入搜过关键字' />
-        <NoticeBar
-          leftIcon='volume-o'
-          text='在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准。'
-        />
+        <View>
+          <Row className='bg-white w-full'>
+            <Col span='20'>
+              <Search placeholder='请输入搜过关键字' onBlur={(e) => setSearch(e.detail.value)} onSearch={onRefresh} />
+            </Col>
+            <Col span='4'>
+              <View className='flex items-center'>
+                <Button className='mt-1 mb-1' type='info' onClick={handlePostVideo} icon='add-o' />
+              </View>
+            </Col>
+          </Row>
+        </View>
       </Sticky>
       <View className='mt-2'>
         <PullToRefresh onRefresh={onRefresh}>
@@ -189,7 +196,7 @@ export default function Index() {
                         <Col span={24}>
                           {item.type == 1 ? (
                             <Video src={item.attachment_url} />
-                          ):(<View></View>)}
+                          ) : (<View></View>)}
                           <Text>
                             {item.content}
                           </Text>
@@ -211,7 +218,7 @@ export default function Index() {
           <GridItem icon='photo-o' text='发文章' onClick={handlePostDoc} />
         </Grid>
       </Popup>
-      <FloatPostButton onClick={handlePostVideo} />
+      {/*<FloatPostButton onClick={handlePostVideo} />*/}
     </View>
   );
 }

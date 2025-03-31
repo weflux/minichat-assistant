@@ -9,6 +9,8 @@ export interface CreatePostResult {
 }
 
 export interface HomeListRequest {
+  max_cursor: string
+  search: string
 }
 
 export interface HomeListResult {

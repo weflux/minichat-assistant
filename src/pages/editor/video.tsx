@@ -63,7 +63,7 @@ const Index = () => {
   return (
     <View>
       <Form form={formIt} initialValues={formValues}>
-        <Textarea autoHeight name='conent' value={content} onInput={(e) => {
+        <Textarea className='w-full' autoHeight maxlength={512} name='conent' value={content} onInput={(e) => {
           setContent(e.detail.value)
         }}
         />
