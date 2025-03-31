@@ -4,6 +4,7 @@ import {Button, Dialog, Divider, Form, FormItem, Picker} from "@antmjs/vantui"
 import {useState} from "react"
 import ClassesAPI from "src/api/classes"
 import PostsAPI from "src/api/posts"
+import MainLayout from "src/layout/main"
 
 interface ClassSelectItem {
   text: string,
@@ -61,14 +62,14 @@ const Index = () => {
   }
 
   return (
-    <View>
+    <MainLayout>
       <Form form={formIt} initialValues={formValues}>
         <Textarea className='w-full' autoHeight maxlength={512} name='conent' value={content} onInput={(e) => {
           setContent(e.detail.value)
         }}
         />
-        <Video src={videoUrl} />
-        <Divider />
+        <Video src={videoUrl}/>
+        <Divider/>
 
         <FormItem
           name='classId'
@@ -79,15 +80,13 @@ const Index = () => {
           controllFlexEnd
           required
         >
-          <Picker idKey='id' mode='content' title='请选择' columns={classList} />
+          <Picker idKey='id' mode='content' title='请选择' columns={classList}/>
         </FormItem>
         <View className='fixed bottom-4 w-full'>
           <Button type='primary' className='w-full' onClick={handlePost}>确认发布</Button>
         </View>
       </Form>
-    </View>
-
-
+    </MainLayout>
   )
 }
 export default Index

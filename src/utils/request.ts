@@ -60,6 +60,10 @@ const request = {
       }
     } else if (result.statusCode == 401) {
       // 清除Token
+      const removeUser = useUserStore.use.removeUser()
+      const removeToken = useUserStore.use.removeToken()
+      removeUser()
+      removeToken()
       Taro.navigateTo({url: '/pages/login/index'})
     } else {
       console.error("Request error", result.data)

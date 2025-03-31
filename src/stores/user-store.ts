@@ -6,9 +6,9 @@ import {StorageSceneKey, zustandStorage} from './libs/storage'
 
 interface State {
   token: string
-  expires_in: number
-  expires_at: number
-  refresh_token: string
+  // expires_in: number
+  // expires_at: number
+  // refresh_token: string
   user: {
     id: string
     name: string
@@ -27,9 +27,9 @@ interface Action {
 
 const initialState: State = {
   token: '',
-  expires_at: 0,
-  expires_in: 0,
-  refresh_token: '',
+  // expires_at: 0,
+  // expires_in: 0,
+  // refresh_token: '',
   user: {
     id: '',
     name: '',
@@ -43,9 +43,9 @@ const store = create<State & Action>()(
   immer(
     persist(
       (set, _get) => ({
-        expires_in: initialState.expires_in,
-        expires_at: initialState.expires_at,
-        refresh_token: initialState.refresh_token,
+        // expires_in: initialState.expires_in,
+        // expires_at: initialState.expires_at,
+        // refresh_token: initialState.refresh_token,
         token: initialState.token,
         user: initialState.user,
         setUser: (user) => set({user}),

@@ -17,44 +17,28 @@ import {
 } from "@antmjs/vantui";
 import {useUserStore} from "src/stores/user-store";
 import Taro, {useDidHide} from "@tarojs/taro"
-import {useEffect, useRef, useState} from "react"
+import {useRef, useState} from "react"
 import FilesAPI from "src/api/files"
 import {PostDetail} from "src/api/types/posts"
 import PostsAPI from "src/api/posts"
-import "./index.less";
+import UsersAPI from "src/api/auth"
+import MainLayout from "src/layout/main"
 
 function getFileExt(filename: string): string | undefined {
   const parts = filename.split('.');
   return parts.length > 1 ? parts.pop()! : undefined;
 }
 
-export interface ContentItem {
-  key: string;
-  author_id: string,
-  author_name: string,
-  author_avatar_url: string,
-  content: string,
-  attachments: string[],
-  created_at: string,
-}
-
 export default function Index() {
-  const user = useUserStore.use.user();
+  const setToken = useUserStore.use.setToken()
+  const user = useUserStore.use.user()
+  const setUser = useUserStore.use.setUser()
   const infiniteScrollInstance = useRef<InfiniteScrollInstance>()
   const [postList, setPostList] = useState<PostDetail[]>([])
 
   const [showPost, setShowPost] = useState(false);
   const [cursor, setCursor] = useState<string>('0')
   const [search, setSearch] = useState<string>('')
-
-  // useLoad(async () => {
-  //   const {list, max_cursor, size} = await PostsAPI.getHomeList({cursor: cursor})
-  //   if (size > 0) {
-  //     postList?.concat(list)
-  //     setPostList(postList)
-  //     setCursor(max_cursor)
-  //   }
-  // })
 
   const loadMore: InfiniteScrollProps['loadMore'] = async () => {
     console.log("loadMore")
@@ -85,20 +69,9 @@ export default function Index() {
     })
   }
 
-  useEffect(() => {
-    if (!user?.id)
-      Taro.navigateTo({
-        url: "/pages/login/index",
-      });
-  }, [user?.id]);
-
   useDidHide(() => {
     setShowPost(false)
   })
-
-  const handleShowPost = () => {
-    setShowPost(true);
-  }
 
   const handlePostVideo = async () => {
     try {
@@ -152,17 +125,8 @@ export default function Index() {
     });
   }
 
-  // const handlePost = (postType: number) => {
-  //   console.log(postType)
-  //   return () => {
-  //     Taro.navigateTo({
-  //       url: `/pages/editor/video`,
-  //     });
-  //   }
-  // }
-
   return (
-    <View className='bg-white h-full'>
+    <MainLayout>
       <Sticky>
         <View>
           <Row className='bg-white w-full'>
@@ -180,7 +144,7 @@ export default function Index() {
       <View className='mt-2'>
         <PullToRefresh onRefresh={onRefresh}>
           <View>
-            {postList.map((item, index) => (
+            {postList.map((item) => (
                 <View key={`homeList-${item.id}`}>
                   <Row>
                     <Col span={4}>
@@ -219,6 +183,6 @@ export default function Index() {
         </Grid>
       </Popup>
       {/*<FloatPostButton onClick={handlePostVideo} />*/}
-    </View>
+    </MainLayout>
   );
 }

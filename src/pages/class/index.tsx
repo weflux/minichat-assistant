@@ -3,6 +3,7 @@ import {Cell, CellGroup, Empty} from "@antmjs/vantui"
 import {useState} from "react"
 import {useLoad} from "@tarojs/taro"
 import ClassesAPI from "src/api/classes"
+import MainLayout from "src/layout/main"
 
 interface ClassInfo {
   classId: string
@@ -52,22 +53,22 @@ const List = () => {
     setData(vdata)
   })
   return (
-    <View>
+    <MainLayout>
       {(data.length > 0) ? (
         <View>
           {data.map((student) => (
               <CellGroup key={student.studentId} title={student.studentName}>
                 {student.classes.map((cls) => (
-                  <Cell key={cls.classId} title={cls.className} value={`ID ${cls.classCode}`} />
+                  <Cell key={cls.classId} title={cls.className} value={`ID ${cls.classCode}`}/>
                 ))}
               </CellGroup>
             )
           )}
         </View>
       ) : (
-        <Empty description='我的课程' />
+        <Empty description='我的课程'/>
       )}
-    </View>
+    </MainLayout>
   )
 }
 

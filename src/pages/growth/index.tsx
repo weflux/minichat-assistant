@@ -1,11 +1,11 @@
-import {View} from "@tarojs/components"
 import {Calendar, Col, Empty, Row} from "@antmjs/vantui"
+import MainLayout from "src/layout/main"
 
 const Index = () => {
   const minDate = new Date()
   const maxDate = new Date()
   return (
-    <View>
+    <MainLayout>
       <Row>
         <Col span={24}>
           <Calendar
@@ -16,11 +16,11 @@ const Index = () => {
           />
         </Col>
         <Col span={24}>
-          <Empty description='成长系统施工中...' />
+          <Empty description='成长系统施工中...'/>
         </Col>
       </Row>
 
-    </View>
+    </MainLayout>
   )
 }
 
