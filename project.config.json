@@ -1,7 +1,7 @@
 {
   "miniprogramRoot": "",
   "projectname": "fluxchat-assistant-weapp",
-  "description": "课外小助教",
+  "description": "课外微助手",
   "setting": {
     "urlCheck": true,
     "es6": false,

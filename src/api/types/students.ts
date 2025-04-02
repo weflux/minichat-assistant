@@ -1,5 +1,3 @@
-export interface GetStudentsRequest {
-}
 
 export interface StudentItem {
   id: string

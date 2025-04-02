@@ -1,30 +1,31 @@
-import Taro, {useRouter} from "@tarojs/taro";
-import {Editor, View} from "@tarojs/components"
-import {useState} from "react"
-import {Button, Col, Row, Toast} from "@antmjs/vantui"
+import Taro, { useRouter } from "@tarojs/taro";
+import { Editor, View } from "@tarojs/components"
+import { useState } from "react"
+import { Button, Col, Row, Toast } from "@antmjs/vantui"
 
 const Post = () => {
   const router = useRouter()
-  const {params} = router;
+  const { params } = router;
   console.log(params)
   // const [postType, setPostType] = useState<number>(0)
   const [editorCtx, setEditorCtx] = useState({})
 
-  const [editorParams, setEditorParams] = useState({
-    placeholder: '输入试试...'
-  })
+  // const [editorParams, setEditorParams] = useState({
+  //   placeholder: '输入试试...'
+  // })
 
   // const [editorCtx, setEditorCtx] = useState(null)
 
   const editorReady = () => {
-    Taro.createSelectorQuery().select('#editor').context((res) => {
+    Taro.createSelectorQuery().select('#editor').context(res => {
       setEditorCtx(res.context)
     }).exec()
+		console.log(editorCtx)
   }
 
-  const handleUndo = () => {
-    editorCtx.undo()
-  }
+  // const handleUndo = () => {
+  //   editorCtx.undo()
+  // }
 
   // const handleAddAttachment = () => {
   //   setTypeSelectorOpened(true)
@@ -32,21 +33,21 @@ const Post = () => {
 
 
   const handleSaveDraftAndBack = () => {
-    Toast.show({message: "草稿保存成功"})
+    Toast.show({ message: "草稿保存成功" })
   }
 
   const handlePublishToHome = () => {
-
+		return
   }
 
   const handlePublishToClass = () => {
-
+		return
   }
 
   return (
     <View>
       <View className='m-2 bg-white rounded-md'>
-        <Editor id='editor' className='editor rounded-md' placeholder={editorParams.placeholder} onReady={editorReady}/>
+        <Editor id='editor' className='editor rounded-md' placeholder='输入试试' onReady={editorReady} />
       </View>
       <View className='fixed bottom-4 left-0 right-0'>
         <Row>

@@ -2,7 +2,7 @@ import {CreateStudentRequest, CreateStudentResult, GetStudentsRequest, GetStuden
 import request from "src/utils/request"
 
 namespace StudentsAPI {
-  export function getStudents(data: GetStudentsRequest): Promise<GetStudentsResult> {
+  export function getStudents(data: {}): Promise<GetStudentsResult> {
     return request.post('/api/v1/students/list', data)
   }
 
