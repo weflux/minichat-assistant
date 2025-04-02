@@ -175,9 +175,9 @@ export default function Index() {
 					<View>
 						<Sticky>
 							<View>
-								<Cell renderTitle={(<View><Text className='font-bold'>{student?.name}</Text><Icon name='arrow'
-																																																	onClick={() => Toast.show('切换学生')}
-								/></View>)}
+								<Cell renderTitle={(<Space><Text className='font-bold'>{student?.name}</Text><Icon name='arrow'
+																																																	 onClick={() => Toast.show('切换学生')}
+								/></Space>)}
 											renderExtra={<Button type='primary' size='small' onClick={handlePostVideo}>打卡</Button>}
 								/>
 							</View>
@@ -185,53 +185,35 @@ export default function Index() {
 						<View className='mt-2 bg-white rounded-md shadow-gray-600'>
 							<Search placeholder='搜索关键字' value={search} onBlur={e => setSearch(e.detail)} onSearch={onRefresh} />
 							<PullToRefresh onRefresh={onRefresh}>
-								<View>
+								<View className='mt-3'>
 									{postList.map(item => (
 											<View key={`homeList-${item.id}`}>
 												<Row>
-
 													<Col span={4}>
-														<Image src={item.author_avatar_url} round width={100} height={100}
+														<Image src={item.author_avatar_url} radius={4} width={80} height={80}
 																	 onClick={() => Toast.show('查看用户详情')}
 																	 className='flex items-center justify-center'
 														/>
 													</Col>
 													<Col span={20}>
-														<Cell renderTitle={<Text className='font-bold'>{item.author_display_name}</Text>}
-																	renderExtra={<Button type='primary' size='small' plain
-																											 onClick={() => Toast.show('查看详情')}
-																	>详情</Button>}
-														/>
-														<View>
-															<Space>
-																<Ellipsis rows={4} defaultExpand hiddenAction>{item.content}</Ellipsis>
-																{item.type == 1 ? (
-																	<Video src={item.attachment_url} />
-																) : (<View></View>)}
-															</Space>
-														</View>
+														<Row>
+															<Col span={20}>
+																<Text className='font-bold left-0'>{item.author_display_name}</Text>
+															</Col>
+															<Col span={4}>
+																<Text className='right-0' style={{}} onClick={() => Toast.show('查看详情')}>详情</Text>
+															</Col>
+															<Col span={24} className='mt-2'>
+																<Space>
+																	<Ellipsis rows={4} defaultExpand hiddenAction>{item.content}</Ellipsis>
+																	{item.type == 1 ? (
+																		<Video src={item.attachment_url} />
+																	) : (<View></View>)}
+																</Space>
+															</Col>
+														</Row>
 													</Col>
 												</Row>
-												{/*<Row>*/}
-												{/*	<Col span={4}>*/}
-												{/*		/>*/}
-												{/*	</Col>*/}
-												{/*	<Col span={20}>*/}
-												{/*		<Row>*/}
-												{/*			<Col span={24}>*/}
-												{/*				<Text className='font-bold'>{item.author_display_name}</Text>*/}
-												{/*			</Col>*/}
-												{/*			<Col span={24}>*/}
-												{/*				{item.type == 1 ? (*/}
-												{/*					<Video src={item.attachment_url} />*/}
-												{/*				) : (<View></View>)}*/}
-												{/*				<Text>*/}
-												{/*					{item.content}*/}
-												{/*				</Text>*/}
-												{/*			</Col>*/}
-												{/*		</Row>*/}
-												{/*	</Col>*/}
-												{/*</Row>*/}
 											</View>
 										)
 									)}
