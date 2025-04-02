@@ -1,9 +1,10 @@
 import { Text, Video, View } from "@tarojs/components";
 import {
+	Button,
 	Cell,
 	Col,
-	Divider,
-	Empty,
+	Ellipsis,
+	Empty, Icon,
 	Image,
 	InfiniteScroll,
 	InfiniteScrollInstance,
@@ -12,7 +13,7 @@ import {
 	PullToRefresh,
 	Row,
 	Search,
-	Sticky,
+	Sticky, Toast,
 } from "@antmjs/vantui";
 import Taro, { useDidHide } from "@tarojs/taro"
 import { useEffect, useRef, useState } from "react"
@@ -171,7 +172,9 @@ export default function Index() {
 					<View>
 						<Sticky>
 							<View>
-								<Cell renderTitle={(<Text className='font-bold'>{student?.name}</Text>)} isLink value='切换' />
+								<Cell renderTitle={(<View><Text className='font-bold'>{student?.name}</Text><Icon name='arrow' onClick={() => Toast.show('切换学生')} /></View>)}
+											renderExtra={<Button type='primary' size='small' onClick={handlePostVideo}>打卡</Button>}
+								/>
 							</View>
 						</Sticky>
 						<View className='mt-2 bg-white rounded-md shadow-gray-600'>
@@ -181,27 +184,44 @@ export default function Index() {
 									{postList.map(item => (
 											<View key={`homeList-${item.id}`}>
 												<Row>
+
 													<Col span={4}>
 														<Image src={item.author_avatar_url} round width={100} height={100}
 																	 className='flex items-center justify-center'
 														/>
 													</Col>
 													<Col span={20}>
-														<Row>
-															<Col span={24}>
-																<Text className='font-bold'>{item.author_display_name}</Text>
-															</Col>
-															<Col span={24}>
-																{item.type == 1 ? (
-																	<Video src={item.attachment_url} />
-																) : (<View></View>)}
-																<Text>
-																	{item.content}
-																</Text>
-															</Col>
-														</Row>
+														<Cell renderTitle={<Text className='font-bold'>{item.author_display_name}</Text>}
+																	isLink
+														/>
+														<View>
+															<Ellipsis rows={4} defaultExpand hiddenAction>{item.content}</Ellipsis>
+															{item.type == 1 ? (
+																<Video src={item.attachment_url} />
+															) : (<View></View>)}
+														</View>
 													</Col>
 												</Row>
+												{/*<Row>*/}
+												{/*	<Col span={4}>*/}
+												{/*		/>*/}
+												{/*	</Col>*/}
+												{/*	<Col span={20}>*/}
+												{/*		<Row>*/}
+												{/*			<Col span={24}>*/}
+												{/*				<Text className='font-bold'>{item.author_display_name}</Text>*/}
+												{/*			</Col>*/}
+												{/*			<Col span={24}>*/}
+												{/*				{item.type == 1 ? (*/}
+												{/*					<Video src={item.attachment_url} />*/}
+												{/*				) : (<View></View>)}*/}
+												{/*				<Text>*/}
+												{/*					{item.content}*/}
+												{/*				</Text>*/}
+												{/*			</Col>*/}
+												{/*		</Row>*/}
+												{/*	</Col>*/}
+												{/*</Row>*/}
 											</View>
 										)
 									)}
