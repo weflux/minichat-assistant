@@ -4,7 +4,8 @@ import {
 	Cell,
 	Col,
 	Ellipsis,
-	Empty, Icon,
+	Empty,
+	Icon,
 	Image,
 	InfiniteScroll,
 	InfiniteScrollInstance,
@@ -13,7 +14,9 @@ import {
 	PullToRefresh,
 	Row,
 	Search,
-	Sticky, Toast,
+	Space,
+	Sticky,
+	Toast,
 } from "@antmjs/vantui";
 import Taro, { useDidHide } from "@tarojs/taro"
 import { useEffect, useRef, useState } from "react"
@@ -172,7 +175,9 @@ export default function Index() {
 					<View>
 						<Sticky>
 							<View>
-								<Cell renderTitle={(<View><Text className='font-bold'>{student?.name}</Text><Icon name='arrow' onClick={() => Toast.show('切换学生')} /></View>)}
+								<Cell renderTitle={(<View><Text className='font-bold'>{student?.name}</Text><Icon name='arrow'
+																																																	onClick={() => Toast.show('切换学生')}
+								/></View>)}
 											renderExtra={<Button type='primary' size='small' onClick={handlePostVideo}>打卡</Button>}
 								/>
 							</View>
@@ -187,18 +192,23 @@ export default function Index() {
 
 													<Col span={4}>
 														<Image src={item.author_avatar_url} round width={100} height={100}
+																	 onClick={() => Toast.show('查看用户详情')}
 																	 className='flex items-center justify-center'
 														/>
 													</Col>
 													<Col span={20}>
 														<Cell renderTitle={<Text className='font-bold'>{item.author_display_name}</Text>}
-																	isLink
+																	renderExtra={<Button type='primary' size='small' plain
+																											 onClick={() => Toast.show('查看详情')}
+																	>详情</Button>}
 														/>
 														<View>
-															<Ellipsis rows={4} defaultExpand hiddenAction>{item.content}</Ellipsis>
-															{item.type == 1 ? (
-																<Video src={item.attachment_url} />
-															) : (<View></View>)}
+															<Space>
+																<Ellipsis rows={4} defaultExpand hiddenAction>{item.content}</Ellipsis>
+																{item.type == 1 ? (
+																	<Video src={item.attachment_url} />
+																) : (<View></View>)}
+															</Space>
 														</View>
 													</Col>
 												</Row>
