@@ -10,12 +10,12 @@ export default defineAppConfig({
         selectedIconPath: 'assets/tabbar/home_fill.png',
         text: '首页',
       },
-      {
-        pagePath: 'pages/growth/index',
-        iconPath: 'assets/tabbar/selection.png',
-        selectedIconPath: 'assets/tabbar/selection_fill.png',
-        text: '成长',
-      },
+      // {
+      //   pagePath: 'pages/growth/index',
+      //   iconPath: 'assets/tabbar/selection.png',
+      //   selectedIconPath: 'assets/tabbar/selection_fill.png',
+      //   text: '成长',
+      // },
       {
         pagePath: 'pages/profile/index',
         iconPath: 'assets/tabbar/profile.png',
@@ -28,7 +28,8 @@ export default defineAppConfig({
     "pages/index/index", // 首页
     "pages/profile/index", // 我的
     "pages/login/index", //登录页
-    "pages/post/index", // 内容
+    // "pages/my-posts/index", // 我的内容
+		"pages/post/index", // 内容详情
     "pages/editor/index", // 发布
     "pages/editor/video", // 视频
     "pages/class/index", // 课程

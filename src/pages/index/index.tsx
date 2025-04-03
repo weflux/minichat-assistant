@@ -21,7 +21,7 @@ import {
 import Taro, { useDidHide } from "@tarojs/taro"
 import { useEffect, useRef, useState } from "react"
 import FilesAPI from "src/api/files"
-import { PostDetail } from "src/api/types/posts"
+import { PostItem } from "src/api/types/posts"
 import PostsAPI from "src/api/posts"
 import MainLayout from "src/layout/main"
 import { Student, useStudentStore } from "src/stores/student-store"
@@ -34,16 +34,6 @@ function getFileExt(filename: string): string | undefined {
 
 export default function Index() {
 
-	// const router = useRouter()
-	// const {params} = router;
-	// const refresh = params.shouldRefresh === "true";
-	// const setToken = useUserStore.use.setToken()
-	// const user = useUserStore.use.user()
-	// const setUser = useUserStore.use.setUser()
-	// const [loading, setLoading] = useState(false)
-	// console.log(loading)
-
-	// const student = useStudentStore.use.selected()
 	const setStudents = useStudentStore.use.setStudents()
 	const student = useStudentStore.use.selected()()
 	const selectedStudentId = useStudentStore.use.selectedId()
@@ -66,7 +56,7 @@ export default function Index() {
 	}, []);
 
 	const infiniteScrollInstance = useRef<InfiniteScrollInstance>()
-	const [postList, setPostList] = useState<PostDetail[]>([])
+	const [postList, setPostList] = useState<PostItem[]>([])
 
 	// const [showPost, setShowPost] = useState(false);
 	const [cursor, setCursor] = useState<string>('0')
@@ -112,6 +102,15 @@ export default function Index() {
 		// setShowPost(false)
 	})
 
+	const handlePostDetail = (postId: string) => () => {
+		return () => {
+			console.log("click post", postId)
+			Taro.navigateTo({
+				url: `/pages/post/index?id=${postId}`,
+			})
+		}
+	}
+
 	const handlePostVideo = async () => {
 		try {
 			const cb = await Taro.chooseVideo({
@@ -153,21 +152,8 @@ export default function Index() {
 		} catch (err) {
 			Taro.showToast({ title: '视频上传失败' })
 			console.log(err)
-			// setLoading(false)
 		}
 	}
-	//
-	// const handlePostAudio = () => {
-	// 	Taro.navigateTo({
-	// 		url: `/pages/editor/index`,
-	// 	});
-	// }
-	//
-	// const handlePostDoc = () => {
-	// 	Taro.navigateTo({
-	// 		url: `/pages/editor/index`,
-	// 	});
-	// }
 
 	return (
 		<MainLayout>
@@ -175,10 +161,11 @@ export default function Index() {
 					<View>
 						<Sticky>
 							<View>
-								<Cell renderTitle={(<Space><Text className='font-bold'>{student?.name}</Text><Icon name='arrow'
-																																																	 onClick={() => Toast.show('切换学生')}
-								/></Space>)}
-											renderExtra={<Button type='primary' size='small' onClick={handlePostVideo}>打卡</Button>}
+								<Cell renderTitle={(<View onClick={() => Toast.show('切换学生')}>
+									<Space><Text className='font-bold'>{student?.name}</Text><Icon name='arrow' /></Space>
+								</View>)} renderExtra={(
+									<Button type='primary' size='small' onClick={handlePostVideo}>打卡</Button>
+								)}
 								/>
 							</View>
 						</Sticky>
@@ -187,7 +174,7 @@ export default function Index() {
 							<PullToRefresh onRefresh={onRefresh}>
 								<View className='mt-3'>
 									{postList.map(item => (
-											<View key={`homeList-${item.id}`}>
+											<View key={`homeList-${item.id}`} className='mt-1'>
 												<Row>
 													<Col span={4}>
 														<Image src={item.author_avatar_url} radius={4} width={80} height={80}
@@ -196,21 +183,37 @@ export default function Index() {
 														/>
 													</Col>
 													<Col span={20}>
-														<Row>
+														<Row className='mt-2'>
 															<Col span={20}>
 																<Text className='font-bold left-0'>{item.author_display_name}</Text>
 															</Col>
 															<Col span={4}>
-																<Text className='right-0' style={{}} onClick={() => Toast.show('查看详情')}>详情</Text>
+																<Text className='right-0 text-blue-400' onClick={handlePostDetail(item.id)()}>详情</Text>
 															</Col>
 															<Col span={24} className='mt-2'>
-																<Space>
+																{item.title ? (
+																	<View>
+																		<Cell title={item.title} renderLabel={(
+																			<View>
+																				<Ellipsis rows={4} defaultExpand hiddenAction>{item.content}</Ellipsis>
+																			</View>
+																		)}
+																		/>
+																	</View>
+
+																) : (
 																	<Ellipsis rows={4} defaultExpand hiddenAction>{item.content}</Ellipsis>
-																	{item.type == 1 ? (
-																		<Video src={item.attachment_url} />
-																	) : (<View></View>)}
-																</Space>
+																)}
 															</Col>
+															{item.type == 1 ? (
+																<Col span={24} className='mt-2'>
+																	<View>
+																		<Video className='w-1/2' showFullscreenBtn autoPauseIfNavigate
+																					 src={item.attachment_url}
+																		/>
+																	</View>
+																</Col>
+															) : (<View></View>)}
 														</Row>
 													</Col>
 												</Row>
