@@ -17,6 +17,7 @@ const Index = () => {
 
 	const handleLogout = () => {
 		removeUser();
+		Taro.navigateTo({ url:"/pages/login/index" })
 	}
 
 	useDidHide(() => {
