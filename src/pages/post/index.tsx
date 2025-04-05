@@ -1,23 +1,46 @@
 import { Text, Video, View } from "@tarojs/components"
-import { Col, Empty, Row } from "@antmjs/vantui"
+import { Button, Col, Empty, Row, ShareSheet, Toast } from "@antmjs/vantui"
 import { useRouter } from "@tarojs/taro"
 import { useEffect, useState } from "react"
 import { PostDetail } from "src/api/types/posts"
 import PostsAPI from "src/api/posts"
 
+const shareOptions = [
+	{
+		name: '微信',
+		icon: 'wechat',
+		openType: 'share',
+	}
+]
 
 const Index = () => {
 	const router = useRouter()
 	const { params } = router;
 	const postId = params.id
 	const [data, setData] = useState<PostDetail>({})
+	const [showShareSheet, setShowShareSheet] = useState<boolean>(false)
 	useEffect(() => {
 		console.log("post_id", postId)
-		PostsAPI.get(postId!)
-			.then(res => {
-				setData(res)
-			})
+		if (postId) {
+			PostsAPI.get(postId)
+				.then(res => {
+					setData(res)
+				})
+		}
 	}, [postId]);
+
+	const handleOpenShareSheet = () => {
+		setShowShareSheet(true)
+	}
+
+	const handleShare = (target: string) => {
+		if (target === "wechat") {
+			handleWechatShare()
+		}
+	}
+	const handleWechatShare = () => {
+
+	}
 	return (
 		<View className='w-full'>
 			{data && data?.post ? (
@@ -42,7 +65,19 @@ const Index = () => {
 								</View>
 							)}
 						</Col>
+						<Col span={24}>
+							<Button type='primary' plain onClick={handleOpenShareSheet}>分享</Button>
+						</Col>
 					</Row>
+
+					<ShareSheet
+						show={showShareSheet}
+						title='立即分享给好友'
+						options={shareOptions}
+						onSelect={e => handleShare(e.detail.name)}
+						onClose={() => setShowShareSheet(false)}
+					/>
+					<Toast />
 				</View>
 			) : (
 				<Empty description='暂无内容' />

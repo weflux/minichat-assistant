@@ -1,13 +1,12 @@
-import {View} from '@tarojs/components'
-import {MiniLoginButton} from '@antmjs/vantui'
-import {useUserStore} from 'src/stores/user-store'
-import Taro, {useLoad} from '@tarojs/taro'
-import {useEffect} from 'react'
+import { View } from '@tarojs/components'
+import { MiniLoginButton } from '@antmjs/vantui'
+import { useUserStore } from 'src/stores/user-store'
+import Taro, { useLoad } from '@tarojs/taro'
 import UsersAPI from "src/api/auth"
 
 export default function Index() {
   const setToken = useUserStore.use.setToken()
-  const user = useUserStore.use.user()
+  // const user = useUserStore.use.user()
   const setUser = useUserStore.use.setUser()
 
   const removeUser = useUserStore.use.removeUser();
@@ -18,17 +17,17 @@ export default function Index() {
     removeToken()
   })
 
-  useEffect(() => {
-    console.log('user', user)
-    if (user.id)
-      Taro.navigateBack({
-        delta: 1,
-        fail: () => Taro.redirectTo({url: '/pages/index/index'})
-      })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // useEffect(() => {
+  //   console.log('user', user)
+  //   if (user.id)
+  //     Taro.navigateBack({
+  //       delta: 1,
+  //       fail: () => Taro.redirectTo({url: '/pages/index/index'})
+  //     })
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
-  const handleLogin = async ({code}: { code: string }) => {
+  const handleLogin = async ({ code }: { code: string }) => {
     console.log('authCode', code)
     const data = await UsersAPI.getToken({
       grant_type: 'weixin_miniprogram',
@@ -36,7 +35,7 @@ export default function Index() {
     })
     console.log(data)
     setToken(data.token)
-    Taro.showToast({title: '登录成功'})
+    Taro.showToast({ title: '登录成功' })
     setUser({
       id: data.user.id,
       name: data.user.name,
@@ -48,7 +47,7 @@ export default function Index() {
     setTimeout(() => {
       Taro.navigateBack({
         delta: 1,
-        fail: () => Taro.redirectTo({url: '/pages/index/index'})
+        fail: () => Taro.redirectTo({ url: '/pages/index/index' })
       })
     }, 1500)
   }

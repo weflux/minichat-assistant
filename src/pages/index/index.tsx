@@ -40,7 +40,7 @@ export default function Index() {
 	const setSelectedId = useStudentStore.use.setSelectedId()
 
 	useEffect(() => {
-		StudentsAPI.getStudents({}).then(data => {
+		StudentsAPI.getStudents().then(data => {
 			const list: Student[] = []
 			data.list.forEach(it => {
 				list.push({
@@ -155,13 +155,17 @@ export default function Index() {
 		}
 	}
 
+	const handleSwitchStudent = () => {
+		Toast.show("内测版本只支持添加一名学生")
+	}
+
 	return (
 		<MainLayout>
 			{student ? (
 					<View>
 						<Sticky>
 							<View>
-								<Cell renderTitle={(<View onClick={() => Toast.show('切换学生')}>
+								<Cell renderTitle={(<View onClick={handleSwitchStudent}>
 									<Space><Text className='font-bold'>{student?.name}</Text><Icon name='arrow' /></Space>
 								</View>)} renderExtra={(
 									<Button type='primary' size='small' onClick={handlePostVideo}>打卡</Button>
