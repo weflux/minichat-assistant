@@ -1,7 +1,7 @@
 {
   "miniprogramRoot": "",
-  "projectname": "fluxchat-assistant-weapp",
-  "description": "课外微助手",
+  "projectname": "课外微助手",
+  "description": "面向小学幼儿园的课外学习助手",
   "setting": {
     "urlCheck": true,
     "es6": false,
@@ -15,7 +15,7 @@
     }
   },
   "compileType": "miniprogram",
-  "appid": "wx28xx1993092xxxx3",
+  "appid": "wx8a69013079fd98eb",
   "libVersion": "3.6.4",
   "packOptions": {
     "ignore": [],

@@ -13,14 +13,14 @@ declare module "*.styl";
 
 declare namespace NodeJS {
   interface ProcessEnv {
-    TARO_ENV: "weapp" | "alipay";
+    TARO_ENV: "weapp" | "alipay"
   }
 }
 
 // 扩展 Taro 的全局对象
 declare namespace Taro {
   interface TaroStatic {
-    uma: any;
+    uma: any
   }
 }
 

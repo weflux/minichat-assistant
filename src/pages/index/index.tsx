@@ -26,11 +26,9 @@ import PostsAPI from "src/api/posts"
 import MainLayout from "src/layout/main"
 import { Student, useStudentStore } from "src/stores/student-store"
 import StudentsAPI from "src/api/students"
+import { formatTimestamp } from "src/utils/time"
+import { getFileExt } from "src/utils/file"
 
-function getFileExt(filename: string): string | undefined {
-	const parts = filename.split('.');
-	return parts.length > 1 ? parts.pop()! : undefined;
-}
 
 export default function Index() {
 
@@ -39,7 +37,7 @@ export default function Index() {
 	const selectedStudentId = useStudentStore.use.selectedId()
 	const setSelectedId = useStudentStore.use.setSelectedId()
 
-	useEffect(() => {
+	const refreshStudents = () => {
 		StudentsAPI.getStudents().then(data => {
 			const list: Student[] = []
 			data.list.forEach(it => {
@@ -53,6 +51,10 @@ export default function Index() {
 				setSelectedId(list[0].id)
 			}
 		})
+	}
+
+	useEffect(() => {
+		refreshStudents()
 	}, []);
 
 	const infiniteScrollInstance = useRef<InfiniteScrollInstance>()
@@ -126,19 +128,20 @@ export default function Index() {
 				category: "video",
 				ext: ext || ''
 			})
+
 			const wxfs = Taro.getFileSystemManager()
 			wxfs.readFile({
 				filePath: filePath,
 				success: function (succ) {
 					// setLoading(true)
 					Taro.request({
-						url: res.upload_url,
+						url: res.pre_signed_url,
 						method: "PUT",
 						data: succ.data,
 						success: function (res2) {
 							if (res2.statusCode === 200) {
 								Taro.navigateTo({
-									url: `/pages/editor/video?videoUrl=${res.upload_url}&width=${width}&height=${height}`,
+									url: `/pages/editor/video?videoUrl=${res.exposed_url}&width=${width}&height=${height}`,
 								});
 							} else {
 								Taro.showToast({ title: '视频上传失败' })
@@ -218,6 +221,9 @@ export default function Index() {
 																	</View>
 																</Col>
 															) : (<View></View>)}
+															<Col span={24}>
+																<Text>发布于：{formatTimestamp(item.created_at)}</Text>
+															</Col>
 														</Row>
 													</Col>
 												</Row>
@@ -233,7 +239,7 @@ export default function Index() {
 				:
 				(
 					<View>
-						<Empty description='请添加学生' />
+						<Empty description='请添加学生或点击刷新' onClick={refreshStudents} />
 					</View>
 				)
 			}

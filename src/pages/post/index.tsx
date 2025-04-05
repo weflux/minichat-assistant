@@ -4,6 +4,7 @@ import { useRouter } from "@tarojs/taro"
 import { useEffect, useState } from "react"
 import { PostDetail } from "src/api/types/posts"
 import PostsAPI from "src/api/posts"
+import { formatTimestamp } from "src/utils/time"
 
 const shareOptions = [
 	{
@@ -49,7 +50,6 @@ const Index = () => {
 						<Col span={24}>
 							{data.post.type == 1 ? (
 								<View>
-
 									<Video className='w-full' showFullscreenBtn autoPauseIfNavigate
 												 src={data.post.attachment_url}
 									/>
@@ -66,10 +66,11 @@ const Index = () => {
 							)}
 						</Col>
 						<Col span={24}>
-							<Button type='primary' plain onClick={handleOpenShareSheet}>分享</Button>
+							<Text>发布于：{formatTimestamp(data.post.created_at)}</Text>
 						</Col>
 					</Row>
 
+					<Button className='fixed w-full bottom-4' type='primary' onClick={handleOpenShareSheet}>分享</Button>
 					<ShareSheet
 						show={showShareSheet}
 						title='立即分享给好友'

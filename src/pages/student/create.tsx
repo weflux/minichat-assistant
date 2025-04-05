@@ -1,13 +1,13 @@
-import {Input, View} from "@tarojs/components"
-import {Button, Dialog, Form, FormItem} from "@antmjs/vantui"
+import { Input, View } from "@tarojs/components"
+import { Button, Dialog, Form, FormItem } from "@antmjs/vantui"
 import StudentsAPI from "src/api/students"
 import Taro from "@tarojs/taro"
-import {useState} from "react"
+import { useState } from "react"
 
 const Create = () => {
 
   const formIt = Form.useForm()
-  const [formValues] = useState<{ name: string }>({name: ''})
+  const [formValues] = useState<{ name: string }>({ name: '' })
 
   const handleSubmit = async () => {
 
@@ -27,7 +27,7 @@ const Create = () => {
         }).then(() => {
           Taro.navigateBack({
             delta: 1,
-            fail: () => Taro.redirectTo({url: '/pages/student/index'})
+            fail: () => Taro.redirectTo({ url: '/pages/student/index' })
           })
         })
       }
@@ -44,7 +44,7 @@ const Create = () => {
           trigger='onInput'
           validateTrigger='onBlur'
           // taro的input的onInput事件返回对应表单的最终值为e.detail.value
-          valueFormat={(e) => e.detail.value}
+          valueFormat={e => e.detail.value}
         >
           <Input placeholder='请输入学生姓名' />
         </FormItem>

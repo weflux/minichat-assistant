@@ -27,6 +27,7 @@ export default defineAppConfig({
 	pages: [
 		"pages/index/index", // 首页
 		"pages/profile/index", // 我的
+		"pages/profile/update", // 更新头像和昵称
 		"pages/login/index", //登录页
 		// "pages/my-posts/index", // 我的内容
 		"pages/post/index", // 内容详情
@@ -47,6 +48,8 @@ export default defineAppConfig({
 			],
 		},
 	],
+	permission: {
+	},
 	window: {
 		enablePullDownRefresh: true, // 默认开启下拉刷新
 		backgroundTextStyle: "light",
