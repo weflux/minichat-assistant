@@ -94,7 +94,7 @@ export default function Index() {
 				setCursor("0")
 			}
 			if (postList?.length || 0 > 1) {
-				infiniteScrollInstance.current?.reset()
+				infiniteScrollInstance.current?.reset(true)
 			}
 			resolve(undefined)
 		})
@@ -192,7 +192,12 @@ export default function Index() {
 													<Col span={20}>
 														<Row className='mt-2'>
 															<Col span={20}>
-																<Text className='font-bold left-0'>{item.author_display_name}</Text>
+																<View className='left-0'>
+																	<Space>
+																		<Text className='font-bold'>{item.author_display_name}</Text>
+																		<Text>@{item.class_name}</Text>
+																	</Space>
+																</View>
 															</Col>
 															<Col span={4}>
 																<Text className='right-0 text-blue-400' onClick={handlePostDetail(item.id)()}>详情</Text>

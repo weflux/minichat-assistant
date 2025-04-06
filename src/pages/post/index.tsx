@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { PostDetail } from "src/api/types/posts"
 import PostsAPI from "src/api/posts"
 import { formatTimestamp } from "src/utils/time"
+import { useNavigationBar } from "taro-hooks"
 
 const shareOptions = [
 	{
@@ -18,6 +19,7 @@ const Index = () => {
 	const router = useRouter()
 	const { params } = router;
 	const postId = params.id
+	const { setTitle } = useNavigationBar()
 	const [data, setData] = useState<PostDetail>({})
 	const [showShareSheet, setShowShareSheet] = useState<boolean>(false)
 	useEffect(() => {
@@ -26,6 +28,7 @@ const Index = () => {
 			PostsAPI.get(postId)
 				.then(res => {
 					setData(res)
+					setTitle(res.post?.class_name||'详情')
 				})
 		}
 	}, [postId]);
