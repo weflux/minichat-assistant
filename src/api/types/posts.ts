@@ -1,5 +1,6 @@
 export interface CreatePostRequest {
 	class_id: string
+	student_id: string
 	content: string
 	attachment_url: string
 	type: number
@@ -24,6 +25,8 @@ export interface PostItem {
 	id: string
 	class_id: string
 	class_name: string
+	student_id: string
+	student_name: string
 	category_id: string
 	title?: string
 	content: string

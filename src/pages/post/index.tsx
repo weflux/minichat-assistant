@@ -1,7 +1,7 @@
 import { Text, Video, View } from "@tarojs/components"
 import { Button, Col, Empty, Row, ShareSheet, Toast } from "@antmjs/vantui"
-import { useRouter } from "@tarojs/taro"
-import { useEffect, useState } from "react"
+import { useLoad, useRouter } from "@tarojs/taro"
+import { useState } from "react"
 import { PostDetail } from "src/api/types/posts"
 import PostsAPI from "src/api/posts"
 import { formatTimestamp } from "src/utils/time"
@@ -17,21 +17,21 @@ const shareOptions = [
 
 const Index = () => {
 	const router = useRouter()
-	const { params } = router;
-	const postId = params.id
+	const { params } = router
+	const postId = params.id || ''
+	console.log("post_id", postId)
+
 	const { setTitle } = useNavigationBar()
 	const [data, setData] = useState<PostDetail>({})
 	const [showShareSheet, setShowShareSheet] = useState<boolean>(false)
-	useEffect(() => {
-		console.log("post_id", postId)
-		if (postId) {
-			PostsAPI.get(postId)
-				.then(res => {
-					setData(res)
-					setTitle(res.post?.class_name||'详情')
-				})
-		}
-	}, [postId]);
+
+	useLoad(async () => {
+		console.log("query post", postId)
+		const res = await PostsAPI.get(postId)
+		setData(res)
+		const title = `${res.post?.student_name}的${res.post?.class_name}`
+		setTitle(title)
+	})
 
 	const handleOpenShareSheet = () => {
 		setShowShareSheet(true)
@@ -43,7 +43,7 @@ const Index = () => {
 		}
 	}
 	const handleWechatShare = () => {
-
+		return
 	}
 	return (
 		<View className='w-full'>
@@ -80,6 +80,27 @@ const Index = () => {
 						options={shareOptions}
 						onSelect={e => handleShare(e.detail.name)}
 						onClose={() => setShowShareSheet(false)}
+						renderTitle={<Text>{data.post.student_name}的{data.post.class_name}</Text>}
+						renderDescription={(
+							<View className='w-full'>
+								{data.post.type == 1 ? (
+									<View>
+										<Video className='w-full' showFullscreenBtn autoPauseIfNavigate
+													 src={data.post.attachment_url}
+										/>
+										<Text>
+											{data.post?.content}
+										</Text>
+									</View>
+								) : (
+									<View>
+										<Text>
+											{data.post?.content}
+										</Text>
+									</View>
+								)}
+							</View>
+						)}
 					/>
 					<Toast />
 				</View>

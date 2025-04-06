@@ -3,6 +3,7 @@ import {
 	Button,
 	Cell,
 	Col,
+	Divider,
 	Ellipsis,
 	Empty,
 	Icon,
@@ -116,8 +117,8 @@ export default function Index() {
 				// maxDuration: 60 * 10
 			})
 			const filePath = cb.tempFilePath
-			const width = cb.width
-			const height = cb.height
+			// const width = cb.width
+			// const height = cb.height
 			const ext = getFileExt(filePath)
 			const res = await FilesAPI.getPreSignedUrl({
 				category: "video",
@@ -136,7 +137,7 @@ export default function Index() {
 						success: function (res2) {
 							if (res2.statusCode === 200) {
 								Taro.navigateTo({
-									url: `/pages/editor/video?videoUrl=${res.exposed_url}&width=${width}&height=${height}`,
+									url: `/pages/editor/video?videoUrl=${res.exposed_url}&studentId=${selectedStudentId}`,
 								});
 							} else {
 								Taro.showToast({ title: '视频上传失败' })
@@ -164,7 +165,7 @@ export default function Index() {
 						<Sticky>
 							<View>
 								<Cell renderTitle={(<View onClick={handleSwitchStudent}>
-									<Space><Text className='font-bold'>{student?.name}</Text><Icon name='arrow' /></Space>
+									<Space><Text className='font-bold text-gray-900'>{student?.name}</Text><Icon name='arrow' /></Space>
 								</View>)} renderExtra={(
 									<Button icon='plus' type='primary' size='small' onClick={handlePostVideo}></Button>
 								)}
@@ -173,7 +174,7 @@ export default function Index() {
 						</Sticky>
 						<View className='mt-2 bg-white rounded-md shadow-gray-600'>
 							<Search placeholder='搜索关键字' value={search} onBlur={e => setSearch(e.detail)} onSearch={onRefresh} />
-							<View>
+							<View className='posts-container'>
 								<PullToRefresh onRefresh={onRefresh}>
 									<View className='mt-3'>
 										{postList.map(item => (
@@ -190,8 +191,8 @@ export default function Index() {
 																<Col span={20}>
 																	<View className='left-0'>
 																		<Space>
-																			<Text className='font-bold'>{item.author_display_name}</Text>
-																			<Text>@{item.class_name}</Text>
+																			<Text className='font-bold text-gray-900'>{item.author_display_name}</Text>
+																			<Text className='text-gray-500'>@{item.class_name}</Text>
 																		</Space>
 																	</View>
 																</Col>
@@ -208,7 +209,6 @@ export default function Index() {
 																			)}
 																			/>
 																		</View>
-
 																	) : (
 																		<Ellipsis rows={4} defaultExpand hiddenAction>{item.content}</Ellipsis>
 																	)}
@@ -216,7 +216,10 @@ export default function Index() {
 																{item.type == 1 ? (
 																	<Col span={24} className='mt-2'>
 																		<View>
-																			<Video className='w-1/2' showFullscreenBtn autoPauseIfNavigate
+																			<Video className='w-1/2'
+																						 showFullscreenBtn
+																						 autoPauseIfNavigate
+																						 showCenterPlayBtn
 																						 src={item.attachment_url}
 																			/>
 																		</View>
@@ -227,12 +230,15 @@ export default function Index() {
 																</Col>
 															</Row>
 														</Col>
+														<Col span={24}>
+															<Divider />
+														</Col>
 													</Row>
 												</View>
 											)
 										)}
 									</View>
-									<InfiniteScroll loadMore={loadMore} ref={infiniteScrollInstance} />
+									<InfiniteScroll parentClassName='posts-container' loadMore={loadMore} ref={infiniteScrollInstance} />
 								</PullToRefresh>
 							</View>
 						</View>
