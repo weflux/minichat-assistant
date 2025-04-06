@@ -85,10 +85,12 @@ export default function Index() {
 	const onRefresh: IPullToRefreshProps['onRefresh'] = async () => {
 		console.log("refresh")
 		return new Promise(async resolve => {
-			const { list, max_cursor } = await PostsAPI.getHomeList({ max_cursor: '0', search: '' })
-			infiniteScrollInstance.current?.reset()
+			const { list, max_cursor, size } = await PostsAPI.getHomeList({ max_cursor: '0', search: '' })
 			setPostList(list)
 			setCursor(max_cursor)
+			if (size > 5) {
+				infiniteScrollInstance.current?.reset()
+			}
 			resolve(undefined)
 		})
 	}
@@ -171,66 +173,68 @@ export default function Index() {
 						</Sticky>
 						<View className='mt-2 bg-white rounded-md shadow-gray-600'>
 							<Search placeholder='搜索关键字' value={search} onBlur={e => setSearch(e.detail)} onSearch={onRefresh} />
-							<PullToRefresh onRefresh={onRefresh}>
-								<View className='mt-3'>
-									{postList.map(item => (
-											<View key={`homeList-${item.id}`} className='mt-1'>
-												<Row>
-													<Col span={4}>
-														<Image src={item.author_avatar_url} radius={4} width={80} height={80}
-																	 onClick={() => Toast.show('查看用户详情')}
-																	 className='flex items-center justify-center'
-														/>
-													</Col>
-													<Col span={20}>
-														<Row className='mt-2'>
-															<Col span={20}>
-																<View className='left-0'>
-																	<Space>
-																		<Text className='font-bold'>{item.author_display_name}</Text>
-																		<Text>@{item.class_name}</Text>
-																	</Space>
-																</View>
-															</Col>
-															<Col span={4}>
-																<Text className='right-0 text-blue-400' onClick={handlePostDetail(item.id)()}>详情</Text>
-															</Col>
-															<Col span={24} className='mt-2'>
-																{item.title ? (
-																	<View>
-																		<Cell title={item.title} renderLabel={(
-																			<View>
-																				<Ellipsis rows={4} defaultExpand hiddenAction>{item.content}</Ellipsis>
-																			</View>
-																		)}
-																		/>
-																	</View>
-
-																) : (
-																	<Ellipsis rows={4} defaultExpand hiddenAction>{item.content}</Ellipsis>
-																)}
-															</Col>
-															{item.type == 1 ? (
-																<Col span={24} className='mt-2'>
-																	<View>
-																		<Video className='w-1/2' showFullscreenBtn autoPauseIfNavigate
-																					 src={item.attachment_url}
-																		/>
+							<View>
+								<PullToRefresh onRefresh={onRefresh}>
+									<View className='mt-3'>
+										{postList.map(item => (
+												<View key={`homeList-${item.id}`} className='mt-1'>
+													<Row>
+														<Col span={4}>
+															<Image src={item.author_avatar_url} radius={4} width={80} height={80}
+																		 onClick={() => Toast.show('查看用户详情')}
+																		 className='flex items-center justify-center'
+															/>
+														</Col>
+														<Col span={20}>
+															<Row className='mt-2'>
+																<Col span={20}>
+																	<View className='left-0'>
+																		<Space>
+																			<Text className='font-bold'>{item.author_display_name}</Text>
+																			<Text>@{item.class_name}</Text>
+																		</Space>
 																	</View>
 																</Col>
-															) : (<View></View>)}
-															<Col span={24}>
-																<Text>发布于：{formatTimestamp(item.created_at)}</Text>
-															</Col>
-														</Row>
-													</Col>
-												</Row>
-											</View>
-										)
-									)}
-								</View>
-								<InfiniteScroll loadMore={loadMore} ref={infiniteScrollInstance} />
-							</PullToRefresh>
+																<Col span={4}>
+																	<Text className='right-0 text-blue-400' onClick={handlePostDetail(item.id)()}>详情</Text>
+																</Col>
+																<Col span={24} className='mt-2'>
+																	{item.title ? (
+																		<View>
+																			<Cell title={item.title} renderLabel={(
+																				<View>
+																					<Ellipsis rows={4} defaultExpand hiddenAction>{item.content}</Ellipsis>
+																				</View>
+																			)}
+																			/>
+																		</View>
+
+																	) : (
+																		<Ellipsis rows={4} defaultExpand hiddenAction>{item.content}</Ellipsis>
+																	)}
+																</Col>
+																{item.type == 1 ? (
+																	<Col span={24} className='mt-2'>
+																		<View>
+																			<Video className='w-1/2' showFullscreenBtn autoPauseIfNavigate
+																						 src={item.attachment_url}
+																			/>
+																		</View>
+																	</Col>
+																) : (<View></View>)}
+																<Col span={24}>
+																	<Text>发布于：{formatTimestamp(item.created_at)}</Text>
+																</Col>
+															</Row>
+														</Col>
+													</Row>
+												</View>
+											)
+										)}
+									</View>
+									<InfiniteScroll loadMore={loadMore} ref={infiniteScrollInstance} />
+								</PullToRefresh>
+							</View>
 						</View>
 					</View>
 				)
