@@ -85,17 +85,10 @@ export default function Index() {
 	const onRefresh: IPullToRefreshProps['onRefresh'] = async () => {
 		console.log("refresh")
 		return new Promise(async resolve => {
-			const { list, max_cursor, size } = await PostsAPI.getHomeList({ max_cursor: '0', search: '' })
-			if (size > 0) {
-				// const newList = postList.concat(list)
-				setPostList(list)
-				setCursor(max_cursor)
-			} else {
-				setCursor("0")
-			}
-			if (postList?.length || 0 > 1) {
-				infiniteScrollInstance.current?.reset(true)
-			}
+			const { list, max_cursor } = await PostsAPI.getHomeList({ max_cursor: '0', search: '' })
+			infiniteScrollInstance.current?.reset()
+			setPostList(list)
+			setCursor(max_cursor)
 			resolve(undefined)
 		})
 	}
