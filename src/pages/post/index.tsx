@@ -74,6 +74,7 @@ const Index = () => {
 					</Row>
 
 					<Button className='fixed w-full bottom-4' type='primary' onClick={handleOpenShareSheet}>分享</Button>
+					{/*<Button className='fixed w-full bottom-4' type='primary' openType='share'>分享</Button>*/}
 					<ShareSheet
 						show={showShareSheet}
 						title='立即分享给好友'
