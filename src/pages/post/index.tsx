@@ -65,8 +65,8 @@ const Index = () => {
 								</View>
 							)}
 						</Col>
-						<Col span={24}>
-							<Text>发布于：{formatTimestamp(data.post.created_at)}</Text>
+						<Col span={24} className='mt-3'>
+							<Text>{data.post.author_display_name} 发布于：{formatTimestamp(data.post.created_at)}</Text>
 						</Col>
 					</Row>
 

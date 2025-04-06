@@ -171,7 +171,7 @@ export default function Index() {
 								<Cell renderTitle={(<View onClick={handleSwitchStudent}>
 									<Space><Text className='font-bold'>{student?.name}</Text><Icon name='arrow' /></Space>
 								</View>)} renderExtra={(
-									<Button type='primary' size='small' onClick={handlePostVideo}>打卡</Button>
+									<Button icon='plus' type='primary' size='small' onClick={handlePostVideo}></Button>
 								)}
 								/>
 							</View>
