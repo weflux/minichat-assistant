@@ -81,26 +81,26 @@ const Index = () => {
 						onSelect={e => handleShare(e.detail.name)}
 						onClose={() => setShowShareSheet(false)}
 						renderTitle={<Text>{data.post.student_name}的{data.post.class_name}</Text>}
-						renderDescription={(
-							<View className='w-full'>
-								{data.post.type == 1 ? (
-									<View>
-										<Video className='w-full' showFullscreenBtn autoPauseIfNavigate
-													 src={data.post.attachment_url}
-										/>
-										<Text>
-											{data.post?.content}
-										</Text>
-									</View>
-								) : (
-									<View>
-										<Text>
-											{data.post?.content}
-										</Text>
-									</View>
-								)}
-							</View>
-						)}
+						// renderDescription={(
+						// 	<View className='w-full'>
+						// 		{data.post.type == 1 ? (
+						// 			<View>
+						// 				<Video className='w-full' showFullscreenBtn autoPauseIfNavigate
+						// 							 src={data.post.attachment_url}
+						// 				/>
+						// 				<Text>
+						// 					{data.post?.content}
+						// 				</Text>
+						// 			</View>
+						// 		) : (
+						// 			<View>
+						// 				<Text>
+						// 					{data.post?.content}
+						// 				</Text>
+						// 			</View>
+						// 		)}
+						// 	</View>
+						// )}
 					/>
 					<Toast />
 				</View>
