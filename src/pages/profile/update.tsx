@@ -81,7 +81,7 @@ const Update = () => {
 					<Button openType='chooseAvatar' type='primary' size='small' onChooseAvatar={handleChooseAvatar}>选择头像</Button>
 				</FormItem>
 				<FormItem label='昵称' name='displayName'>
-					<Input type='nickname' value={nickName} placeholder='点击输入昵称' onBlur={e => setNickName(e.detail.value)} />
+					<Input type='nickname' value={nickName} placeholder='点击输入昵称' onInput={e => setNickName(e.detail.value)} />
 				</FormItem>
 				<Button className='fixed w-full bottom-4' type='primary' onClick={handleUpdateProfile}>提交</Button>
 			</Form>
