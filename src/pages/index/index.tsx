@@ -69,7 +69,7 @@ export default function Index() {
 		console.log("loadMore")
 		return new Promise(async resolve => {
 			try {
-				const { list, max_cursor, limit, size } = await PostsAPI.getHomeList({ max_cursor: cursor, search: '' })
+				const { list, max_cursor, limit, size } = await PostsAPI.getTimeline({ max_cursor: cursor, search: '' })
 				if (size > 0) {
 					const newList = postList.concat(list)
 					setPostList(newList)
@@ -86,7 +86,7 @@ export default function Index() {
 	const onRefresh: IPullToRefreshProps['onRefresh'] = async () => {
 		console.log("refresh")
 		return new Promise(async resolve => {
-			const { list, max_cursor, size } = await PostsAPI.getHomeList({ max_cursor: '0', search: '' })
+			const { list, max_cursor, size } = await PostsAPI.getTimeline({ max_cursor: '0', search: '' })
 			setPostList(list)
 			setCursor(max_cursor)
 			if (size > 5) {
