@@ -54,7 +54,7 @@ export default defineAppConfig({
 		enablePullDownRefresh: true, // 默认开启下拉刷新
 		backgroundTextStyle: "light",
 		navigationBarBackgroundColor: "#fff",
-		navigationBarTitleText: "课外微助手", // 默认导航栏标题
+		navigationBarTitleText: "课后打卡助手", // 默认导航栏标题
 		navigationBarTextStyle: "black",
 	},
 	lazyCodeLoading: "requiredComponents"
