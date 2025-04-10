@@ -4,6 +4,7 @@ export interface CreatePostRequest {
 	content: string
 	attachment_url: string
 	type: number
+	attachment_ids: string[]
 }
 
 export interface CreatePostResult {
@@ -39,6 +40,14 @@ export interface PostItem {
 	author_name: string
 	author_display_name: string
 	author_avatar_url: string
+	attachments: AttachmentItem[]
+}
+
+export interface AttachmentItem {
+	id: string
+	type: number
+	url: string
+	snapshot_url: string
 }
 
 export interface PostDetail {

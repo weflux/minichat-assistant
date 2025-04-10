@@ -14,8 +14,8 @@ const Update = () => {
 	const setUser = useUserStore.use.setUser()
 
 	const uploadAvatar = async (filePath: string, cb: (fileUrl: string) => void) => {
-		const res = await FilesAPI.getPreSignedUrl({
-			category: "avatar",
+		const res = await FilesAPI.prepare({
+			type: "avatar",
 			ext: getFileExt(filePath) || "jpg",
 		})
 

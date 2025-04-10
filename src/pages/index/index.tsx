@@ -5,7 +5,8 @@ import {
 	Col,
 	Divider,
 	Ellipsis,
-	Empty,
+	Empty, Grid,
+	GridItem,
 	Icon,
 	Image,
 	InfiniteScroll,
@@ -22,7 +23,7 @@ import {
 import Taro, { useDidHide } from "@tarojs/taro"
 import { useEffect, useRef, useState } from "react"
 import FilesAPI from "src/api/files"
-import { PostItem } from "src/api/types/posts"
+import { AttachmentItem, PostItem } from "src/api/types/posts"
 import PostsAPI from "src/api/posts"
 import MainLayout from "src/layout/main"
 import { Student, useStudentStore } from "src/stores/student-store"
@@ -120,8 +121,8 @@ export default function Index() {
 			// const width = cb.width
 			// const height = cb.height
 			const ext = getFileExt(filePath)
-			const res = await FilesAPI.getPreSignedUrl({
-				category: "video",
+			const res = await FilesAPI.prepare({
+				type: "video",
 				ext: ext || ''
 			})
 
@@ -137,7 +138,7 @@ export default function Index() {
 						success: function (res2) {
 							if (res2.statusCode === 200) {
 								Taro.navigateTo({
-									url: `/pages/editor/video?videoUrl=${res.exposed_url}&studentId=${selectedStudentId}`,
+									url: `/pages/editor/video?videoUrl=${res.exposed_url}&studentId=${selectedStudentId}&attachmentId=${res.attachment_id}`,
 								});
 							} else {
 								Taro.showToast({ title: '视频上传失败' })
@@ -151,6 +152,20 @@ export default function Index() {
 		} catch (err) {
 			Taro.showToast({ title: '视频上传失败' })
 			console.log(err)
+		}
+	}
+
+	const AttachmentView = ( { attachment }:{ attachment: AttachmentItem }) => {
+		if (attachment.type == 1) {
+			return (
+				<Video style={{ 'width': 150 , 'height': 150 }} src={attachment.url} key={attachment.id} poster={attachment.snapshot_url} />
+			)
+		} else if (attachment.type == 2) {
+			return (
+				<Image src={attachment.url} key={attachment.id} />
+			)
+		} else {
+			return (<View></View>)
 		}
 	}
 
@@ -213,16 +228,25 @@ export default function Index() {
 																		<Ellipsis rows={4} defaultExpand hiddenAction>{item.content}</Ellipsis>
 																	)}
 																</Col>
-																{item.type == 1 ? (
+																{item.attachments.length > 0 ? (
 																	<Col span={24} className='mt-2'>
-																		<View>
-																			<Video className='w-1/2'
-																						 showFullscreenBtn
-																						 autoPauseIfNavigate
-																						 showCenterPlayBtn
-																						 src={item.attachment_url}
-																			/>
-																		</View>
+																		<Grid columnNum={2}>
+																			{item.attachments.map((att, index) => {
+																				return (
+																					<GridItem key={index}>
+																						<AttachmentView attachment={att} />
+																					</GridItem>
+																				)
+																			})}
+																		</Grid>
+																		{/*<View>*/}
+																		{/*	<Video className='w-1/2'*/}
+																		{/*				 showFullscreenBtn*/}
+																		{/*				 autoPauseIfNavigate*/}
+																		{/*				 showCenterPlayBtn*/}
+																		{/*				 src={item.attachment_url}*/}
+																		{/*	/>*/}
+																		{/*</View>*/}
 																	</Col>
 																) : (<View></View>)}
 																<Col span={24}>

@@ -1,9 +1,9 @@
-import {GetPreSignedUrlRequest, GetPreSignedUrlResult} from "src/api/types/files"
+import { FilePrepareRequest, FilePrepareResult } from "src/api/types/files"
 import request from "src/utils/request"
 
 namespace FilesAPI {
-  export function getPreSignedUrl(data: GetPreSignedUrlRequest): Promise<GetPreSignedUrlResult> {
-    return request.post('/api/v1/files/preSignedUrl', data);
+  export function prepare(data: FilePrepareRequest): Promise<FilePrepareResult> {
+    return request.post('/api/v1/files/prepare', data);
   }
 }
 

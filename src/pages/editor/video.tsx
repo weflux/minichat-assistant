@@ -17,6 +17,7 @@ const Index = () => {
 	const { params } = router;
 	const videoUrl = params?.videoUrl || '';
 	const studentId = params?.studentId;
+	const attachmentId = params?.attachmentId;
 	const [classList, setClassList] = useState<ClassSelectItem[]>([])
 	useLoad(async () => {
 		const data = await ClassesAPI.getClasses({})
@@ -34,6 +35,10 @@ const Index = () => {
 	const [formValues] = useState<{ content: string; classId: string }>({ content: '', classId: '' })
 	const [content, setContent] = useState<string>('')
 
+	const attachmentIds: string[] = []
+	if (attachmentId) {
+		attachmentIds.push(attachmentId)
+	}
 	const handlePost = async () => {
 
 		formIt.validateFields((errorMessage, fieldValues) => {
@@ -52,7 +57,8 @@ const Index = () => {
 					class_id: fieldValues['classId'],
 					student_id: studentId || "",
 					content: content,
-					type: 1
+					type: 1,
+					attachment_ids: attachmentIds,
 				}).then(() => {
 					Taro.navigateBack({
 						delta: 1,

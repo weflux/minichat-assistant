@@ -1,9 +1,10 @@
-export interface GetPreSignedUrlRequest {
+export interface FilePrepareRequest {
 	ext: string
-	category: string
+	type: string
 }
 
-export interface GetPreSignedUrlResult {
+export interface FilePrepareResult {
+	attachment_id: string
 	exposed_url: string
 	pre_signed_url: string
 	file_path: string
